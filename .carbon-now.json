@@ -1,0 +1,24 @@
+{
+  "latest-preset": {
+    "theme": "seti",
+    "backgroundColor": "#50E3C2",
+    "windowTheme": "none",
+    "windowControls": true,
+    "fontFamily": "Hack",
+    "fontSize": "18px",
+    "lineNumbers": false,
+    "firstLineNumber": 1,
+    "dropShadow": true,
+    "dropShadowOffsetY": "20px",
+    "dropShadowBlurRadius": "68px",
+    "selectedLines": "*",
+    "widthAdjustment": true,
+    "lineHeight": "133%",
+    "paddingVertical": "192px",
+    "paddingHorizontal": "128px",
+    "squaredImage": false,
+    "watermark": false,
+    "exportSize": "2x",
+    "type": "png"
+  }
+}
