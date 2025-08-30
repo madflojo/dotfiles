@@ -93,7 +93,7 @@ Create a clear, professional pull request using the **`gh` CLI**, with a **Conve
 ## What to Extract (from `git log` + `git diff`)
 
 * **Scope & Type**: Infer `type(scope)` from changed packages/modules/paths.
-* **Subject**: One-line net effect (≤ 100 chars).
+* **Subject**: One-line net effect (≤ 100 chars). Prefer a single, primary change (e.g., “add PR creation prompt”). If several unrelated files changed, append “and refine other files”.
 * **Key Changes**: Bulleted list (e.g., “added X,” “refactored Y,” “fixed Z”).
 * **Rationale**: Why the change was needed (bug, feature, cleanup, perf, security).
 * **Risk/Impact**: Breaking changes, migrations, perf/latency, security implications.
@@ -172,6 +172,7 @@ Create a clear, professional pull request using the **`gh` CLI**, with a **Conve
 
    * Infer `type(scope)` from changed top-level dirs (e.g., `api`, `pkg/foo`, `docs`).
    * Write a ≤ 100-char subject describing the net effect.
+   * Prefer a single primary phrase (e.g., “add PR creation prompt”) and, only if multiple areas changed, append “and refine other files”.
    * No leading emoji. If you add one, place a single emoji at the end.
 
 4. **Draft Body (to temp file)**
@@ -217,6 +218,7 @@ fi
 # Gather signals
 COMMITS="$(git --no-pager log --oneline --decorate --no-merges "${UPSTREAM_REF}..HEAD")"
 DIFFSTAT="$(git --no-pager diff --stat "${UPSTREAM_REF}..HEAD")"
+DIFFNAMES="$(git --no-pager diff --name-only "${UPSTREAM_REF}..HEAD")"
 
 # Derive scope (simple heuristic: first-level dir(s) changed)
 SCOPE="$(git --no-pager diff --name-only "${UPSTREAM_REF}..HEAD" | awk -F/ 'NF{print $1}' | sort -u | tr '\n' ',' | sed 's/,$//' )"
@@ -231,11 +233,44 @@ elif echo "$COMMITS" | grep -qiE '\bdocs?\b'; then TYPE="docs"
 elif echo "$COMMITS" | grep -qiE '\btest(s)?\b'; then TYPE="test"
 else TYPE="chore"; fi
 
-SUBJECT="$(echo "$COMMITS" | head -n1 | sed 's/^[a-f0-9]\{7,\} //' | sed -E 's/\s+/ /g' | cut -c1-100)"
-PR_TITLE="${TYPE}(${SCOPE}): ${SUBJECT}"
+# Synthesize a concise subject with a primary focus.
+LATEST_SUBJECT_RAW="$(echo "$COMMITS" | head -n1 | sed 's/^[a-f0-9]\{7,\} //')"
+LATEST_SUBJECT_STRIPPED="$(echo "$LATEST_SUBJECT_RAW" | sed -E 's/^[a-z]+(\([^)]*\))?:\s*//i')"
+
+# Determine the primary change and matching pattern
+PRIMARY_SUBJECT="$LATEST_SUBJECT_STRIPPED"
+PRIMARY_MATCH='a^' # matches nothing by default
+if echo "$DIFFNAMES" | grep -q '^\.prompts/open-pr\.md$'; then
+  PRIMARY_SUBJECT="add PR creation prompt"
+  PRIMARY_MATCH='^\.prompts/open-pr\.md$'
+elif echo "$DIFFNAMES" | grep -q '^\.prompts/'; then
+  PRIMARY_SUBJECT="refine prompts"
+  PRIMARY_MATCH='^\.prompts/'
+elif echo "$DIFFNAMES" | grep -q '^README\.md$'; then
+  PRIMARY_SUBJECT="update documentation"
+  PRIMARY_MATCH='^README\.md$'
+elif echo "$DIFFNAMES" | grep -q '^\.vimrc$'; then
+  PRIMARY_SUBJECT="update Vim config"
+  PRIMARY_MATCH='^\.vimrc$'
+elif echo "$DIFFNAMES" | grep -q '^\.tmux\.conf$'; then
+  PRIMARY_SUBJECT="tweak tmux config"
+  PRIMARY_MATCH='^\.tmux\.conf$'
+fi
+
+TOTAL_CHANGED="$(printf '%s\n' "$DIFFNAMES" | sed '/^$/d' | wc -l | tr -d ' ')"
+PRIMARY_COUNT="$(printf '%s\n' "$DIFFNAMES" | sed '/^$/d' | grep -E -c "$PRIMARY_MATCH" || true)"
+
+if [ "${TOTAL_CHANGED:-0}" -gt "${PRIMARY_COUNT:-0}" ]; then
+  SUBJECT_CORE="${PRIMARY_SUBJECT} and refine other files"
+else
+  SUBJECT_CORE="${PRIMARY_SUBJECT}"
+fi
+
+SUBJECT_TRUNC="$(printf '%s' "$SUBJECT_CORE" | cut -c1-100)"
+PR_TITLE="${TYPE}(${SCOPE}): ${SUBJECT_TRUNC}"
 
 # Optionally append one emoji at the end of the title (never at the start)
-# Uncomment and set ONE emoji below to add subtle flair.
+# Default: none. Uncomment to enable subtle flair.
 # OPTIONAL_EMOJI="✨"
 # [ -n "$OPTIONAL_EMOJI" ] && PR_TITLE="${PR_TITLE} ${OPTIONAL_EMOJI}"
 
