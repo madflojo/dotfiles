@@ -30,10 +30,10 @@ git commit -m "commit message"
 
 ## Style
 
-- Never start with an emoji.
+- Never start with an emoji; one emoji at the end of the subject is OK.
 
 - Add a touch of contextual humor (just enough for a chuckle, but still relevant and professional).
 
-- Emojis are allowed for subtle flair, but limit to one or two.
+- Title/subject: optionally append a single emoji at the end; Body: keep total emojis subtle (generally ≤2).
 
 - Avoid shell-problematic characters (especially `!`).

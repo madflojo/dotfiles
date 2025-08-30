@@ -7,3 +7,4 @@ My Dot Files Repo
 | [Zsh](https://www.zsh.org/) | A shell designed for interactive use, although it is also a powerful scripting language. |
 | Tmux | A terminal multiplexer for Unix-like operating systems. |
 | [Carbon](https://carbon.now.sh/) | Create and share beautiful images of your source code. |
+| VIM | A highly configurable text editor built to make creating and changing any kind of text very efficient. (Using copilot, and rainbox plugins) |
