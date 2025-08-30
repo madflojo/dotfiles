@@ -201,92 +201,47 @@ Create a clear, professional pull request using the **`gh` CLI**, with a **Conve
 
 ---
 
-## Example Shell Snippet (Agent to Execute)
+## Quick Recipe (Human-Friendly)
+
+Keep it simple — no kitchen-sink script required. Use these steps:
+
+1) Resolve base
 
 ```bash
-set -euo pipefail
+# Prefer your branch's upstream; otherwise fall back to origin/main
+UPSTREAM_REF="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo origin/main)"
+echo "Using base: $UPSTREAM_REF"
+```
 
-# Resolve base
-UPSTREAM_REF="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || true)"
-if [ -z "$UPSTREAM_REF" ]; then
-  UPSTREAM_REF="$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD | sed 's#^refs/remotes/##' || true)"
-fi
-if [ -z "$UPSTREAM_REF" ]; then
-  UPSTREAM_REF="origin/main"
-fi
+2) Review changes since base
 
-# Gather signals
-COMMITS="$(git --no-pager log --oneline --decorate --no-merges "${UPSTREAM_REF}..HEAD")"
-DIFFSTAT="$(git --no-pager diff --stat "${UPSTREAM_REF}..HEAD")"
-DIFFNAMES="$(git --no-pager diff --name-only "${UPSTREAM_REF}..HEAD")"
+```bash
+git --no-pager log --oneline --decorate --no-merges "${UPSTREAM_REF}..HEAD"
+git --no-pager diff --stat "${UPSTREAM_REF}..HEAD"
+```
 
-# Derive scope (simple heuristic: first-level dir(s) changed)
-SCOPE="$(git --no-pager diff --name-only "${UPSTREAM_REF}..HEAD" | awk -F/ 'NF{print $1}' | sort -u | tr '\n' ',' | sed 's/,$//' )"
-[ -z "$SCOPE" ] && SCOPE="repo"
+3) Craft a concise title (Conventional Commits)
 
-# Infer type (very basic heuristic; adjust as needed)
-if echo "$COMMITS" | grep -qiE '\bfix|bug|hotfix\b'; then TYPE="fix"
-elif echo "$COMMITS" | grep -qiE '\bfeat|feature\b'; then TYPE="feat"
-elif echo "$COMMITS" | grep -qiE '\bperf\b'; then TYPE="perf"
-elif echo "$COMMITS" | grep -qiE '\brefactor\b'; then TYPE="refactor"
-elif echo "$COMMITS" | grep -qiE '\bdocs?\b'; then TYPE="docs"
-elif echo "$COMMITS" | grep -qiE '\btest(s)?\b'; then TYPE="test"
-else TYPE="chore"; fi
+- Format: `type(scope): subject`
+- Scope: first-level dirs touched (e.g., `prompts,docs`)
+- Subject: prefer one primary change; if multiple, append “and refine other files”.
 
-# Synthesize a concise subject with a primary focus.
-LATEST_SUBJECT_RAW="$(echo "$COMMITS" | head -n1 | sed 's/^[a-f0-9]\{7,\} //')"
-LATEST_SUBJECT_STRIPPED="$(echo "$LATEST_SUBJECT_RAW" | sed -E 's/^[a-z]+(\([^)]*\))?:\s*//i')"
+Example:
 
-# Determine the primary change and matching pattern
-PRIMARY_SUBJECT="$LATEST_SUBJECT_STRIPPED"
-PRIMARY_MATCH='a^' # matches nothing by default
-if echo "$DIFFNAMES" | grep -q '^\.prompts/open-pr\.md$'; then
-  PRIMARY_SUBJECT="add PR creation prompt"
-  PRIMARY_MATCH='^\.prompts/open-pr\.md$'
-elif echo "$DIFFNAMES" | grep -q '^\.prompts/'; then
-  PRIMARY_SUBJECT="refine prompts"
-  PRIMARY_MATCH='^\.prompts/'
-elif echo "$DIFFNAMES" | grep -q '^README\.md$'; then
-  PRIMARY_SUBJECT="update documentation"
-  PRIMARY_MATCH='^README\.md$'
-elif echo "$DIFFNAMES" | grep -q '^\.vimrc$'; then
-  PRIMARY_SUBJECT="update Vim config"
-  PRIMARY_MATCH='^\.vimrc$'
-elif echo "$DIFFNAMES" | grep -q '^\.tmux\.conf$'; then
-  PRIMARY_SUBJECT="tweak tmux config"
-  PRIMARY_MATCH='^\.tmux\.conf$'
-fi
+```text
+feat(prompts,dotfiles,docs): add PR creation prompt and refine other files
+```
 
-TOTAL_CHANGED="$(printf '%s\n' "$DIFFNAMES" | sed '/^$/d' | wc -l | tr -d ' ')"
-PRIMARY_COUNT="$(printf '%s\n' "$DIFFNAMES" | sed '/^$/d' | grep -E -c "$PRIMARY_MATCH" || true)"
+4) Write body to a temp file
 
-if [ "${TOTAL_CHANGED:-0}" -gt "${PRIMARY_COUNT:-0}" ]; then
-  SUBJECT_CORE="${PRIMARY_SUBJECT} and refine other files"
-else
-  SUBJECT_CORE="${PRIMARY_SUBJECT}"
-fi
-
-SUBJECT_TRUNC="$(printf '%s' "$SUBJECT_CORE" | cut -c1-100)"
-PR_TITLE="${TYPE}(${SCOPE}): ${SUBJECT_TRUNC}"
-
-# Optionally append one emoji at the end of the title (never at the start)
-# Default: none. Uncomment to enable subtle flair.
-# OPTIONAL_EMOJI="✨"
-# [ -n "$OPTIONAL_EMOJI" ] && PR_TITLE="${PR_TITLE} ${OPTIONAL_EMOJI}"
-
+```bash
 BODY_FILE="$(mktemp -t pr-body-XXXXXX.md)"
-{
-  printf '## Summary\n%s\n\n' "Summarize the net effect of these changes. Keeping it simple and testable. ✅"
-  printf '## Changes\n'
-  echo "$COMMITS" | sed 's/^/- /'
-  printf '\n## Rationale\n%s\n\n' "Why this change is needed (bug/feature/perf/security)."
-  printf '## Risk & Impact\n- Breaking changes: <yes/no>\n- Performance/latency: <notes>\n- Security: <notes>\n- Migration steps: <if any>\n\n'
-  printf '## Testing\n- Unit: <added/updated>\n- Integration/E2E: <added/updated>\n- Manual: <how to verify>\n\n'
-  printf '## Checklist\n- [ ] Tests updated/added\n- [ ] Docs updated\n- [ ] Backward compatible (or migration steps provided)\n\n'
-  printf '## Links\n- Closes #<id>\n- Related: #<id>\n'
-} > "$BODY_FILE"
+$EDITOR "$BODY_FILE"  # paste the template below and fill it in
+```
 
-# Create PR
+5) Create the PR (avoid shell-unfriendly chars in inline args)
+
+```bash
 gh pr create \
   --base "$(echo "$UPSTREAM_REF" | sed 's#^origin/##')" \
   --head "$(git rev-parse --abbrev-ref HEAD)" \
