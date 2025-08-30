@@ -1,10 +1,84 @@
 # dotfiles
-My Dot Files Repo
 
-| Tools | Description |
-| --- | --- |
-| [Starship](https://starship.rs/) | The minimal, blazing-fast, and infinitely customizable prompt for any shell! |
-| [Zsh](https://www.zsh.org/) | A shell designed for interactive use, although it is also a powerful scripting language. |
-| Tmux | A terminal multiplexer for Unix-like operating systems. |
-| [Carbon](https://carbon.now.sh/) | Create and share beautiful images of your source code. |
-| VIM | A highly configurable text editor built to make creating and changing any kind of text very efficient. (Using copilot, and rainbox plugins) |
+**Personal terminal/editor configs and reusable prompts to streamline dev workflows.**
+
+---
+
+Setting up a new machine shouldn’t mean hunting down dotfiles and rewriting the same shell prompts. This repo gathers my Vim and tmux setup plus a small library of copy‑pasteable prompts for common tasks like generating READMEs, opening PRs, and writing concise commits.
+
+It’s deliberately minimal: a few well‑tuned config files and focused prompts that help you move fast without guessing conventions.
+
+---
+
+## 🧠 What is dotfiles?
+A lightweight collection of editor/terminal configuration and practical prompts for consistent, speedy developer workflows.
+
+- Centralizes Vim and tmux preferences for frictionless setup
+- Provides high‑quality prompts for PRs, commits, reviews, and repo discovery
+- Encourages concise, conventional, and verifiable practices (IDD/TDD mindset)
+
+---
+
+## 🚀 Getting Started
+
+### Installation
+
+- Clone and link configs (adjust paths as you prefer):
+  ```bash
+  git clone git@github.com:madflojo/dotfiles.git ~/.dotfiles
+
+  # Link Vim and tmux configs
+  ln -s ~/.dotfiles/.vimrc ~/.vimrc
+  ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
+  ```
+
+---
+
+## 🧱 Structure
+
+The repo includes a few focused config files and templates.
+
+| Path                 | Description                                          |
+| -------------------- | ---------------------------------------------------- |
+| `.vimrc`             | Vim defaults (2‑space tabs), Markdown Copilot, rainbow parens |
+| `.tmux.conf`         | Status line styling and Screen‑style `Ctrl-a` prefix |
+| `.prompts/`          | Preset prompts for AI coding agents (learn, README, commit, PR, review) |
+| `AGENTS.md`          | A README for agents: context and instructions for AI coding agents working on this project |
+| `.carbon-now.json`   | Preset for carbon.now.sh exports                     |
+
+---
+
+## 🧰 Developer Tooling
+
+Common tools used alongside these dotfiles. Use this as a quick setup checklist for a new dev machine.
+
+| Tool             | Purpose                                |
+| ---------------- | -------------------------------------- |
+| GitHub CLI (`gh`) | Create/view PRs, issues, releases      |
+| `act`            | Run GitHub Actions locally              |
+| Docker           | Containers for dev/test                 |
+| Docker Compose   | Define multi-service dev stacks         |
+| Make (`make`)    | Consistent task runner via Makefiles    |
+| Vim              | Modal text editor                       |
+| tmux             | Terminal multiplexer                    |
+| Starship         | Fast, customizable shell prompt         |
+| jq               | Command-line JSON processor             |
+| grip             | GitHub-flavored Markdown preview        |
+
+---
+
+## 🤝 Contributing
+
+PRs welcome! Please open an issue to discuss ideas or improvements first.
+
+---
+
+## 📄 License
+
+Apache-2.0 — see [LICENSE](LICENSE).
+
+---
+
+## 🌴 Stay Tidy
+
+If you have a neat prompt or dotfile trick, share it — small wins add up.
