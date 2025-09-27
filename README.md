@@ -38,13 +38,13 @@ A lightweight collection of editor/terminal configuration and practical prompts 
 
 The repo includes a few focused config files and templates.
 
-| Path                 | Description                                          |
-| -------------------- | ---------------------------------------------------- |
-| `.vimrc`             | Vim defaults (2‑space tabs), Markdown Copilot, rainbow parens |
-| `.tmux.conf`         | Status line styling and Screen‑style `Ctrl-a` prefix |
-| `.prompts/`          | Preset prompts for AI coding agents (learn, README, commit, PR, review) |
-| `AGENTS.md`          | A README for agents: context and instructions for AI coding agents working on this project |
-| `.carbon-now.json`   | Preset for carbon.now.sh exports                     |
+| Category | Path | Description |
+| --- | --- | --- |
+| Config | `.carbon-now.json` | Preset for carbon.now.sh exports |
+| Config | `.tmux.conf` | Status line styling and Screen-style `Ctrl-a` prefix |
+| Config | `.vimrc` | Vim defaults (2-space tabs), Markdown Copilot, rainbow parens |
+| Docs | `AGENTS.md` | A README for agents: context and instructions for AI coding agents working on this project |
+| Prompts | `.prompts/` | Preset prompts for AI coding agents (learn, README, commit, PR, review) |
 
 ---
 
@@ -52,18 +52,19 @@ The repo includes a few focused config files and templates.
 
 Common tools used alongside these dotfiles. Use this as a quick setup checklist for a new dev machine.
 
-| Tool             | Purpose                                |
-| ---------------- | -------------------------------------- |
-| GitHub CLI (`gh`) | Create/view PRs, issues, releases      |
-| `act`            | Run GitHub Actions locally              |
-| Docker           | Containers for dev/test                 |
-| Docker Compose   | Define multi-service dev stacks         |
-| Make (`make`)    | Consistent task runner via Makefiles    |
-| Vim              | Modal text editor                       |
-| tmux             | Terminal multiplexer                    |
-| Starship         | Fast, customizable shell prompt         |
-| jq               | Command-line JSON processor             |
-| grip             | GitHub-flavored Markdown preview        |
+| Category | Tool | Purpose |
+| --- | --- | --- |
+| Automation | Make (`make`) | Consistent task runner via Makefiles |
+| CLI Utilities | `act` | Run GitHub Actions locally |
+| CLI Utilities | carbon-now-cli (node package) | Create and share beautiful code snippets |
+| CLI Utilities | GitHub CLI (`gh`) | Create/view PRs, issues, releases |
+| CLI Utilities | grip | GitHub-flavored Markdown preview |
+| CLI Utilities | jq | Command-line JSON processor |
+| Containerization | Docker | Containers for dev/test |
+| Containerization | Docker Compose | Define multi-service dev stacks |
+| Editor | Vim | Modal text editor |
+| Terminal | Starship | Fast, customizable shell prompt |
+| Terminal | tmux | Terminal multiplexer |
 
 ---
 
