@@ -93,7 +93,6 @@ Keep it accurate (no hallucinations), concise, and developer-friendly.
 - **Go (library)**
   ```bash
   go get <module-path>
-````
 
 * **Node (library/CLI)**
 
