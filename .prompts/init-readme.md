@@ -168,23 +168,23 @@ PRs welcome! Please see `CONTRIBUTING.md` (if present) and open an issue for dis
 
 ## Badge Heuristics (the agent should apply automatically)
 
-* **Repo**: parse `git remote get-url origin` → `<host>/<owner>/<repo>`
-* **Go**:
+- **Repo**: parse `git remote get-url origin` → `<host>/<owner>/<repo>`
+- **Go**:
 
-  * Go version: `https://img.shields.io/github/go-mod/go-version/<owner>/<repo>`
-  * Go Reference: `https://pkg.go.dev/badge/<module-path>.svg` → link to `https://pkg.go.dev/<module-path>`
-  * Go Report Card: `https://goreportcard.com/badge/<module-path>` → link to report
-* **Coverage (if Codecov present)**:
+  - Go version: `https://img.shields.io/github/go-mod/go-version/<owner>/<repo>`
+  - Go Reference: `https://pkg.go.dev/badge/<module-path>.svg` → link to `https://pkg.go.dev/<module-path>`
+  - Go Report Card: `https://goreportcard.com/badge/<module-path>` → link to report
+- **Coverage (if Codecov present)**:
 
-  * `https://codecov.io/gh/<owner>/<repo>/branch/<default-branch>/graph/badge.svg`
-* **General CI (if GH Actions workflows exist)**:
+  - `https://codecov.io/gh/<owner>/<repo>/branch/<default-branch>/graph/badge.svg`
+- **General CI (if GH Actions workflows exist)**:
 
-  * `https://github.com/<owner>/<repo>/actions` (use named workflow badge if known)
-* **Other ecosystems** (only if confident):
+  - `https://github.com/<owner>/<repo>/actions` (use named workflow badge if known)
+- **Other ecosystems** (only if confident):
 
-  * Rust: `docs.rs` badge; crates.io version
-  * Python: PyPI version; Read the Docs
-  * Node: npm version; bundle size (optional)
+  - Rust: `docs.rs` badge; crates.io version
+  - Python: PyPI version; Read the Docs
+  - Node: npm version; bundle size (optional)
 
 If any badge cannot be resolved confidently, **omit it**.
 
