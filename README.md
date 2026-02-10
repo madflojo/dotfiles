@@ -1,20 +1,20 @@
 # dotfiles
 
-**Personal terminal/editor configs and reusable prompts to streamline dev workflows.**
+**Personal terminal/editor configs and reusable Agent Skills to streamline dev workflows.**
 
 ---
 
-Setting up a new machine shouldn’t mean hunting down dotfiles and rewriting the same shell prompts. This repo gathers my Vim and tmux setup plus a small library of copy‑pasteable prompts for common tasks like generating READMEs, opening PRs, and writing concise commits.
+Setting up a new machine shouldn’t mean hunting down dotfiles and rewriting the same workflows. This repo gathers my Vim and tmux setup plus a small library of Agent Skills for common tasks like generating READMEs, opening PRs, and writing concise commits.
 
-It’s deliberately minimal: a few well‑tuned config files and focused prompts that help you move fast without guessing conventions.
+It’s deliberately minimal: a few well‑tuned config files and focused skills that help you move fast without guessing conventions.
 
 ---
 
 ## 🧠 What is dotfiles?
-A lightweight collection of editor/terminal configuration and practical prompts for consistent, speedy developer workflows.
+A lightweight collection of editor/terminal configuration and practical Agent Skills for consistent, speedy developer workflows.
 
 - Centralizes Vim and tmux preferences for frictionless setup
-- Provides high‑quality prompts for PRs, commits, reviews, and repo discovery
+- Provides high‑quality skills for PRs, commits, reviews, and repo discovery
 - Encourages concise, conventional, and verifiable practices (IDD/TDD mindset)
 
 ---
@@ -44,7 +44,8 @@ The repo includes a few focused config files and templates.
 | Config | `.tmux.conf` | Status line styling and Screen-style `Ctrl-a` prefix |
 | Config | `.vimrc` | Vim defaults (2-space tabs), Markdown Copilot, rainbow parens |
 | Docs | `AGENTS.md` | A README for agents: context and instructions for AI coding agents working on this project |
-| Prompts | `.prompts/` | Preset prompts for AI coding agents (learn, README, commit, PR, review) |
+| Skills | `skills/` | Agent Skills library for common workflows (learn, README, commit, PR, review) |
+| Prompts | `.prompts/` | Deprecated; use `skills/` instead |
 
 ---
 
