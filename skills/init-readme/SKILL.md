@@ -105,8 +105,9 @@ Keep it accurate (no hallucinations), concise, and developer-friendly.
 - **Go (library)**
   ```bash
   go get <module-path>
+  ```
 
-* **Node (library/CLI)**
+- **Node (library/CLI)**
 
   ```bash
   npm i <package-name>
@@ -114,7 +115,7 @@ Keep it accurate (no hallucinations), concise, and developer-friendly.
   pnpm add <package-name>
   ```
 
-* **Python (library/CLI)**
+- **Python (library/CLI)**
 
   ```bash
   pip install <package-name>
