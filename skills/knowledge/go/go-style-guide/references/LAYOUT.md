@@ -43,10 +43,10 @@ Example:
 .
 ├── go.mod
 ├── README.md
-├── client.go
+├── worker.go
 ├── config.go
 ├── drivers/
-│   ├── redis/
+│   ├── file/
 │   └── memory/
 └── docs/
 ```
@@ -77,7 +77,7 @@ Example:
 │   ├── app/          # runtime orchestration + lifecycle
 │   ├── config/       # config parsing + validation
 │   ├── database/     # external system boundaries
-│   ├── httpclient/   # capability-focused package
+│   ├── worker/       # capability-focused package
 │   └── telemetry/    # metrics/tracing/logging wiring
 └── README.md
 ```
@@ -95,7 +95,7 @@ Rule of thumb:
 
 Good:
 
-- `pkg/httpclient`
+- `pkg/worker`
 - `pkg/tlsconfig`
 - `pkg/cache/lookaside`
 
@@ -163,13 +163,13 @@ Avoid `init()` unless absolutely required.
 
 ### Example skeleton
 ```go
-// Package httpclient provides HTTP access via host calls.
-package httpclient
+// Package worker provides task execution via an injected Runner.
+package worker
 
 import (
 	"errors"
-	"fmt"
-	"net/url"
+	"context"
+	"time"
 )
 
 // Exported constants.
@@ -177,35 +177,35 @@ const DefaultTimeout = 3 * time.Second
 
 // Sentinel errors.
 var (
-	ErrInvalidConfig = errors.New("httpclient: invalid config")
-	ErrRequestFailed = errors.New("httpclient: request failed")
+	ErrInvalidConfig = errors.New("worker: invalid config")
+	ErrRunFailed     = errors.New("worker: run failed")
 )
 
 // Boundary interface.
-type Client interface {
-	Do(req *Request) (*Response, error)
+type Runner interface {
+	Run(ctx context.Context, input []byte) ([]byte, error)
 }
 
 // Config defines construction-time behavior.
 type Config struct {
 	Timeout time.Duration
-	HostCall HostCallFunc
+	Runner Runner
 }
 
-// New validates config, applies defaults, and returns a concrete client.
-func New(cfg Config) (*client, error) {
+// New validates config, applies defaults, and returns a concrete worker.
+func New(cfg Config) (*worker, error) {
 	if cfg.Timeout == 0 {
 		cfg.Timeout = DefaultTimeout
 	}
-	if cfg.HostCall == nil {
+	if cfg.Runner == nil {
 		return nil, ErrInvalidConfig
 	}
 
-	return &client{cfg: cfg}, nil
+	return &worker{cfg: cfg}, nil
 }
 
 // Unexported implementation.
-type client struct {
+type worker struct {
 	cfg Config
 }
 ```
@@ -220,7 +220,7 @@ Interfaces are a tool for **testability and boundary isolation**.
 Good uses:
 
 - database drivers
-- host call injection
+- transport injection
 - network transports
 - external service clients
 
@@ -232,11 +232,11 @@ Avoid interfaces purely for abstraction layering.
 
 Prefer:
 ```go
-func New(cfg Config) (*Client, error)
+func New(cfg Config) (*Worker, error)
 ```
 Not:
 ```go
-func New(cfg Config) (Client, error)
+func New(cfg Config) (Worker, error)
 ```
 Returning interfaces can hide behavior and complicate extension.
 
@@ -294,7 +294,8 @@ Optimize where benchmarks justify it.
 
 Receivers should be short and consistent:
 
-- `c *Client`
+- `e *Executor`
+- `w *Worker`
 - `s *Server`
 - `db *Database`
 - `r *Router`
@@ -321,10 +322,10 @@ Avoid verbose receiver names.
 
 Example:
 ```go
-func TestClient_Do(t *testing.T) {
+func TestWorker_Run(t *testing.T) {
 	tests := []struct {
 		name string
-		url  string
+		input  []byte
 		wantErr error
 	}{...}
 

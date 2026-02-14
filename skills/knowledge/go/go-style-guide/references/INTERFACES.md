@@ -41,14 +41,16 @@ Your application becomes testable without spinning up real dependencies.
 Interfaces should exist where the system crosses a boundary:
 
 - database driver
-- host runtime capability
-- external API client
+- runtime capability
+- external service boundary
 - logging sink
 - queue or scheduler backend
 
 Good:
 ```go
-type HostCall func(string, string, string, []byte) ([]byte, error)
+type Runner interface {
+    Run(ctx context.Context, input []byte) ([]byte, error)
+}
 ```
 Good:
 ```go
@@ -103,21 +105,21 @@ Large interfaces reduce flexibility and are harder to mock correctly.
 
 ## Preferred Pattern: Interface at Top-Level, Implementations in Subpackages
 
-This is the “drivers” model used in projects like `hord`.
+This is the “drivers” model used in many Go libraries.
 
 Example structure:
 ```
-hord/
+store/
 ├── database.go          # Interface + shared errors
 ├── drivers/
-│   ├── redis/
-│   ├── cassandra/
-│   ├── bbolt/
+│   ├── file/
+│   ├── memory/
+│   ├── noop/
 │   └── mock/
 ```
 ### Root Interface
 ```go
-package hord
+package store
 
 type Database interface {
     Get(ctx context.Context, key string) ([]byte, error)
@@ -127,10 +129,10 @@ type Database interface {
 ```
 ### Driver Implementation
 ```go
-package redis
+package memory
 
 type Database struct {
-    client *redis.Client
+    items map[string][]byte
 }
 
 func Dial(cfg Config) (*Database, error) {
@@ -153,7 +155,7 @@ func Dial(cfg Config) (*Database, error)
 ```
 Not:
 ```go
-func Dial(cfg Config) (hord.Database, error)
+func Dial(cfg Config) (store.Database, error)
 ```
 Concrete returns provide:
 
@@ -173,13 +175,13 @@ func Open(cfg Config) (Database, error)
 ```
 ### The Implementation Must Remain Hidden
 ```go
-func New(cfg Config) (Client, error)
+func New(cfg Config) (Executor, error)
 ```
 ### Plugin/Driver Selection Happens at Runtime
 ```go
 switch cfg.Driver {
-case "redis":
-    return redis.Dial(...)
+case "memory":
+    return memory.Dial(...)
 case "mock":
     return mock.Dial(...)
 }
@@ -201,7 +203,7 @@ if Foo exists only so tests can mock it.
 Instead:
 
 - test against concrete structs
-- inject real boundaries (DB, HostCall, HTTP)
+- inject real boundaries (DB, runners, queues)
 
 ---
 
@@ -212,7 +214,7 @@ Interfaces are often injected through Config.
 Example:
 ```go
 type Config struct {
-    Database hord.Database
+    Database store.Database
     Logger   *slog.Logger
 }
 ```
@@ -227,14 +229,14 @@ func New(cfg Config) (*Service, error) {
 ```
 ---
 
-## HostCall Function Interfaces (SDK Pattern)
+## Function Interfaces (SDK-Like Pattern)
 
-In SDKs, a function type is often the best interface.
+In SDK-style packages, a function type is often the best interface.
 
 Example:
 ```go
 type Config struct {
-    HostCall func(string, string, string, []byte) ([]byte, error)
+    Run func(ctx context.Context, input []byte) ([]byte, error)
 }
 ```
 This avoids large mock surfaces while still enabling test injection.

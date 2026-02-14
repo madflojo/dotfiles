@@ -54,16 +54,16 @@ return fmt.Errorf("dial failed: %s", err) // breaks errors.Is
 
 When multiple failures matter:
 ```go
-return errors.Join(ErrHostCall, err)
+return errors.Join(ErrRunFailed, err)
 ```
 This keeps both:
 
-- the sentinel meaning (`ErrHostCall`)
+- the sentinel meaning (`ErrRunFailed`)
 - the underlying cause (`err`)
 
 Callers can still do:
 ```go
-errors.Is(err, ErrHostCall)
+errors.Is(err, ErrRunFailed)
 ```
 ---
 
@@ -75,16 +75,16 @@ Libraries should not decide how errors are surfaced.
 
 Good:
 ```go
-func (c *Client) Do() error {
-    if err := c.call(); err != nil {
-        return fmt.Errorf("%w: %w", ErrHostCall, err)
+func (e *Executor) Run(ctx context.Context, input []byte) error {
+    if err := e.call(ctx, input); err != nil {
+        return fmt.Errorf("%w: %w", ErrRunFailed, err)
     }
     return nil
 }
 ```
 Bad:
 ```go
-log.Printf("host call failed: %v", err)
+log.Printf("request failed: %v", err)
 return nil
 ```
 ---
@@ -96,7 +96,7 @@ If an operation is best-effort, document it clearly:
 // Flush attempts to send metrics but does not fail the caller.
 // Errors are intentionally ignored.
 func (m *Metrics) Flush() {
-    _, _ = m.hostCall(...)
+    _, _ = m.do(...)
 }
 ```
 Default behavior should always be explicit error returns.
@@ -130,11 +130,11 @@ Sentinel-first is still preferred for most cases.
 
 Constructors must validate inputs and fail fast:
 ```go
-func New(cfg Config) (*Client, error) {
-    if cfg.Namespace == "" {
+func New(cfg Config) (*Executor, error) {
+    if cfg.Runner == nil {
         return nil, ErrInvalidConfig
     }
-    return &Client{cfg: cfg}, nil
+    return &Executor{cfg: cfg}, nil
 }
 ```
 Do not defer invalid configuration errors until runtime.
@@ -182,19 +182,19 @@ When adding or reviewing an error path:
 Preferred package error shape:
 ```go
 var ErrInvalidConfig = errors.New("invalid config")
-var ErrHostCall = errors.New("host call failed")
+var ErrRunFailed = errors.New("run failed")
 
-func New(cfg Config) (*Client, error) {
-    if cfg.HostCall == nil {
+func New(cfg Config) (*Executor, error) {
+    if cfg.Runner == nil {
         return nil, ErrInvalidConfig
     }
-    return &Client{cfg: cfg}, nil
+    return &Executor{cfg: cfg}, nil
 }
 
-func (c *Client) Do() error {
-    _, err := c.cfg.HostCall(...)
+func (e *Executor) Run(ctx context.Context, input []byte) error {
+    _, err := e.cfg.Runner.Run(ctx, input)
     if err != nil {
-        return errors.Join(ErrHostCall, err)
+        return errors.Join(ErrRunFailed, err)
     }
     return nil
 }

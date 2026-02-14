@@ -51,11 +51,11 @@ type Config struct {
     Logger *slog.Logger
 }
 
-type Client struct {
+type Worker struct {
     log *slog.Logger
 }
 
-func New(cfg Config) *Client {
+func New(cfg Config) *Worker {
     // Never force logging on users.
     // If nil, use slog's discard logger.
     log := cfg.Logger
@@ -63,7 +63,7 @@ func New(cfg Config) *Client {
         log = slog.New(slog.NewTextHandler(io.Discard, nil))
     }
 
-    return &Client{log: log}
+    return &Worker{log: log}
 }
 ```
 ### Why discard?
@@ -78,12 +78,12 @@ func New(cfg Config) *Client {
 
 If something fails, return an error.
 ```go
-func (c *Client) Do(ctx context.Context, req *Request) (*Response, error) {
-    resp, err := c.send(ctx, req)
+func (w *Worker) Run(ctx context.Context, input []byte) ([]byte, error) {
+    output, err := w.run(ctx, input)
     if err != nil {
-        return nil, fmt.Errorf("send request: %w", err)
+        return nil, fmt.Errorf("run: %w", err)
     }
-    return resp, nil
+    return output, nil
 }
 ```
 Only log in-package when:

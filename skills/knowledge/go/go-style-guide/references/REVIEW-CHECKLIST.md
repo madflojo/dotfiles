@@ -45,7 +45,7 @@ The goal is consistency, clarity, and long-term maintainability.
 
 Example:
 ```go
-func New(cfg Config) (*Client, error)
+func New(cfg Config) (*Worker, error)
 ```
 - [ ] Packages define their own `Config` structs.
 - [ ] No global config objects passed everywhere (`*viper.Viper` anti-pattern).
@@ -63,17 +63,17 @@ func New(cfg Config) (*Client, error)
 
 ### Interfaces are for boundaries
 
-- [ ] Interfaces exist to isolate external systems (DB, network, host calls).
+- [ ] Interfaces exist to isolate external systems (DB, network, transports).
 - [ ] Interfaces are small and capability-driven.
 - [ ] Packages do not return interfaces unnecessarily.
 
 Prefer:
 ```go
-func New(cfg Config) (*Client, error)
+func New(cfg Config) (*Worker, error)
 ```
 Not:
 ```go
-func New(cfg Config) (Client, error)
+func New(cfg Config) (Worker, error)
 ```
 ### Testability is first-class
 
@@ -148,7 +148,7 @@ Except in CLI entrypoints.
 
 - [ ] Small scopes use short names (`i`, `k`, `v`, `r`, `ctx`).
 - [ ] Exported names are clear and domain-specific.
-- [ ] Avoid stutter (`http.HttpClient`).
+- [ ] Avoid stutter (`worker.Worker`).
 
 ---
 
@@ -174,7 +174,7 @@ type TLSMode int
 ```
 Over:
 ```go
-Do(..., insecure bool)
+Run(..., insecure bool)
 ```
 ---
 

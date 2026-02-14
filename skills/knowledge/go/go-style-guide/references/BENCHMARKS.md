@@ -12,7 +12,7 @@ Benchmarks are especially important for:
 - packages used in hot paths
 - concurrency primitives and coordination code
 - serialization/deserialization
-- network/tcp/grpc/http client behavior
+- transport/client behavior
 - caching and lookup logic
 - parsing and validation logic
 - allocations and memory churn
@@ -66,7 +66,7 @@ If you are changing:
 Include benchmarks that match how users will call the code:
 
 - low-level microbenchmarks (tight loops, pure funcs)
-- boundary benchmarks (interface calls, host calls, marshal/unmarshal)
+- boundary benchmarks (interface calls, transport calls, marshal/unmarshal)
 - concurrency benchmarks (contention patterns)
 
 ---
@@ -195,7 +195,7 @@ If comparing two approaches:
 Prefer benchmarking:
 
 - request/response encoding
-- client-side construction
+- constructor behavior
 - parsing
 - retry logic decisions
 

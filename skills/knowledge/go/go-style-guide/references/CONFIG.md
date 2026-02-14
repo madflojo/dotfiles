@@ -53,36 +53,37 @@ Constructors should:
 
 ## Canonical Pattern
 
-### Example: SDK-Style Config + Client
+### Example: Generic Executor
 
 This is the preferred shape:
 ```go
-// Client defines the public contract.
-type Client interface {
-    Do(req *Request) (*Response, error)
+// Executor defines the public contract.
+type Executor interface {
+    Run(ctx context.Context, input []byte) ([]byte, error)
 }
 
-// Config configures client behavior and host integration.
+// Runner is a minimal dependency for executing work.
+type Runner interface {
+    Run(ctx context.Context, input []byte) ([]byte, error)
+}
+
+// Config configures executor behavior and dependencies.
 type Config struct {
-    // Runtime namespace for host calls.
-    SDKConfig sdk.RuntimeConfig
+    Timeout time.Duration
 
-    // Security-sensitive flags must be explicit.
-    InsecureSkipVerify bool
-
-    // HostCall allows injection for tests.
-    HostCall func(string, string, string, []byte) ([]byte, error)
+    // Runner allows injection for tests.
+    Runner Runner
 }
 
-// client is the concrete implementation.
-type client struct {
-    cfg      Config
-    hostCall func(string, string, string, []byte) ([]byte, error)
+// executor is the concrete implementation.
+type executor struct {
+    cfg  Config
+    run  Runner
 }
 ```
 Key takeaways:
 
-- Interface is boundary-driven (`Client`)
+- Interface is boundary-driven (`Executor`)
 - Config is explicit and documented
 - Concrete struct holds runtime behavior
 
@@ -94,18 +95,18 @@ Key takeaways:
 
 Do not rely on implicit zero-value magic when defaults matter.
 ```go
-func New(cfg Config) (*client, error) {
-    if cfg.SDKConfig.Namespace == "" {
-        cfg.SDKConfig.Namespace = sdk.DefaultNamespace
+func New(cfg Config) (*executor, error) {
+    if cfg.Timeout == 0 {
+        cfg.Timeout = DefaultTimeout
     }
 
-    if cfg.HostCall == nil {
-        cfg.HostCall = wapc.HostCall
+    if cfg.Runner == nil {
+        cfg.Runner = DefaultRunner
     }
 
-    return &client{
-        cfg:      cfg,
-        hostCall: cfg.HostCall,
+    return &executor{
+        cfg:  cfg,
+        run: cfg.Runner,
     }, nil
 }
 ```
@@ -123,12 +124,12 @@ Invalid config should fail in `New`, not later.
 ```go
 var ErrInvalidConfig = errors.New("invalid config")
 
-func New(cfg Config) (*client, error) {
-    if cfg.HostCall == nil {
+func New(cfg Config) (*executor, error) {
+    if cfg.Runner == nil {
         return nil, ErrInvalidConfig
     }
 
-    return &client{cfg: cfg}, nil
+    return &executor{cfg: cfg}, nil
 }
 ```
 ---
@@ -137,7 +138,7 @@ func New(cfg Config) (*client, error) {
 
 Preferred:
 ```go
-func New(cfg Config) (*ClientImpl, error)
+func New(cfg Config) (*ExecutorImpl, error)
 ```
 Interface returns are useful when:
 
@@ -240,14 +241,20 @@ type Config struct {
 
 Config structs make testing easy:
 ```go
-func TestClientTimeout(t *testing.T) {
-    c, err := New(Config{
+type failingRunner struct{}
+
+func (f failingRunner) Run(ctx context.Context, input []byte) ([]byte, error) {
+    return nil, errors.New("boom")
+}
+
+func TestExecutorTimeout(t *testing.T) {
+    e, err := New(Config{
         Timeout: 10 * time.Millisecond,
-        HostCall: hostmock.Fail(),
+        Runner: failingRunner{},
     })
     require.NoError(t, err)
 
-    _, err = c.Do(req)
+    _, err = e.Run(context.Background(), nil)
     require.Error(t, err)
 }
 ```

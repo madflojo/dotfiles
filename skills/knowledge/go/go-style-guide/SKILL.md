@@ -141,36 +141,31 @@ Prefer:
 
 ---
 
-## Canonical Config Example (SDK-style)
+## Canonical Config Example (Generic Executor)
 
 This is the “accepted” pattern: `Config` drives behavior, constructor returns a concrete struct, and test seams are explicit.
 ```go
-// Client provides an interface for making HTTP requests.
-type Client interface {
-    Get(url string) (*Response, error)
-    Post(url, contentType string, body io.Reader) (*Response, error)
-    Put(url, contentType string, body io.Reader) (*Response, error)
-    Delete(url string) (*Response, error)
-    Do(req *Request) (*Response, error)
+// Runner provides a minimal contract for executing work.
+type Runner interface {
+    Run(ctx context.Context, input []byte) ([]byte, error)
 }
 
-// Config configures the HTTP client behavior and host integration.
+// Config configures behavior and dependencies.
 type Config struct {
-    SDKConfig           sdk.RuntimeConfig
-    InsecureSkipVerify  bool
-    HostCall            func(string, string, string, []byte) ([]byte, error)
+    Timeout time.Duration
+    Runner  Runner
 }
 
-// httpClient implements Client using waPC host calls.
-type httpClient struct {
-    cfg      Config
-    hostCall func(string, string, string, []byte) ([]byte, error)
+// executor implements Runner-backed execution.
+type executor struct {
+    cfg  Config
+    run  Runner
 }
 ```
 Guidance:
 
 - Config is **owned by the package** (not passed around as global app config)
-- Defaults apply in `New` (e.g., namespace, HostCall)
+- Defaults apply in `New` (e.g., timeout, Runner)
 - Validate at construction when possible
 
 ---
