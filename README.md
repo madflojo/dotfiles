@@ -1,84 +1,48 @@
-# dotfiles
+# dotfiles 🧰
 
-**Personal terminal/editor configs and reusable Agent Skills to streamline dev workflows.**
+**Terminal/editor configs and reusable Agent Skills for consistent dev workflows.**
+
+[![License](https://img.shields.io/github/license/madflojo/dotfiles)](LICENSE)
 
 ---
 
-Setting up a new machine shouldn’t mean hunting down dotfiles and rewriting the same workflows. This repo gathers my Vim and tmux setup plus a small library of Agent Skills for common tasks like generating READMEs, opening PRs, and writing concise commits.
+Setting up a new machine shouldn't mean hunting for dotfiles or rewriting the same workflow notes. This repo keeps a small, focused set of configs plus a library of Agent Skills for common tasks like reviews, PRs, commits, and repo discovery.
 
-It’s deliberately minimal: a few well‑tuned config files and focused skills that help you move fast without guessing conventions.
+It's intentionally minimal: a few trusted config files and a skills library that keeps work predictable without slowing you down.
 
 ---
 
 ## 🧠 What is dotfiles?
-A lightweight collection of editor/terminal configuration and practical Agent Skills for consistent, speedy developer workflows.
+A lightweight collection of Vim/tmux configs and practical Agent Skills for consistent, fast developer workflows.
 
 - Centralizes Vim and tmux preferences for frictionless setup
-- Provides high‑quality skills for PRs, commits, reviews, and repo discovery
+- Provides reusable skills for PRs, commits, reviews, and repo discovery
 - Encourages concise, conventional, and verifiable practices (IDD/TDD mindset)
-
----
-
-## 🚀 Getting Started
-
-### Installation
-
-- Clone and link configs (adjust paths as you prefer):
-  ```bash
-  git clone git@github.com:madflojo/dotfiles.git ~/.dotfiles
-
-  # Link Vim and tmux configs
-  ln -s ~/.dotfiles/.vimrc ~/.vimrc
-  ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
-  ```
 
 ---
 
 ## 🧱 Structure
 
-The repo includes a few focused config files and templates.
+The project is organized into focused modules so you can depend only on what you need.
 
-| Category | Path | Description |
+| Module/Path | Description | Docs |
 | --- | --- | --- |
-| Config | `.carbon-now.json` | Preset for carbon.now.sh exports |
-| Config | `.tmux.conf` | Status line styling and Screen-style `Ctrl-a` prefix |
-| Config | `.vimrc` | Vim defaults (2-space tabs), Markdown Copilot, rainbow parens |
-| Docs | `AGENTS.md` | A README for agents: context and instructions for AI coding agents working on this project |
-| Skills | `skills/` | Agent Skills library organized by action area (git, docs, go, agent, review) |
-| Prompts | `.prompts/` | Deprecated; use `skills/` instead |
+| `.vimrc` | Vim defaults, plugins, and editor preferences | [Reference](.vimrc) |
+| `.tmux.conf` | tmux status line and key bindings | [Reference](.tmux.conf) |
+| `.carbon-now.json` | Preset for carbon.now.sh exports | [Reference](.carbon-now.json) |
+| `AGENTS.md` | Context/instructions for AI coding agents | [Reference](AGENTS.md) |
+| `skills/actions/` | Action-oriented skills (git, docs, go, review, agent) | [Reference](skills/actions/docs/init-readme/SKILL.md) |
+| `skills/knowledge/` | Reference skills and style guides | [Reference](skills/knowledge/go/go-style-guide/SKILL.md) |
 
 ---
 
-### Skills Layout
+## 📦 Tech & Integrations (optional)
 
-| Skill | Path | Description |
-| --- | --- | --- |
-| `learn-this` | `skills/actions/agent/learn-this/` | Quickly learn a repo by summarizing purpose, architecture, stack, and conventions |
-| `init-readme` | `skills/actions/docs/init-readme/` | Generate a polished README from repo structure and configs |
-| `commit` | `skills/actions/git/commit/` | Create a Conventional Commit message and perform a commit for staged changes |
-| `open-pr` | `skills/actions/git/open-pr/` | Summarize changes and open a GitHub PR via `gh` |
-| `gen-godocs` | `skills/actions/go/gen-godocs/` | Generate missing idiomatic Go doc comments and output a unified diff |
-| `review-godocs` | `skills/actions/go/review-godocs/` | Audit Go packages for missing/non-idiomatic godoc and report findings |
-| `review-this` | `skills/actions/review/review-this/` | Structured review with ratings, checklist, and improvement suggestions |
-| `go-style-guide` | `skills/knowledge/go/go-style-guide/` | Go engineering style guide for APIs, errors, testing, and tooling |
-
-## 🧰 Developer Tooling
-
-Common tools used alongside these dotfiles. Use this as a quick setup checklist for a new dev machine.
-
-| Category | Tool | Purpose |
-| --- | --- | --- |
-| Automation | Make (`make`) | Consistent task runner via Makefiles |
-| CLI Utilities | `act` | Run GitHub Actions locally |
-| CLI Utilities | carbon-now-cli (node package) | Create and share beautiful code snippets |
-| CLI Utilities | GitHub CLI (`gh`) | Create/view PRs, issues, releases |
-| CLI Utilities | grip | GitHub-flavored Markdown preview |
-| CLI Utilities | jq | Command-line JSON processor |
-| Containerization | Docker | Containers for dev/test |
-| Containerization | Docker Compose | Define multi-service dev stacks |
-| Editor | Vim | Modal text editor |
-| Terminal | Starship | Fast, customizable shell prompt |
-| Terminal | tmux | Terminal multiplexer |
+- Editor: Vim
+- Terminal: tmux
+- Automation: Make
+- CLI utilities: GitHub CLI (`gh`), `act`
+- Containerization: Docker
 
 ---
 
@@ -91,9 +55,3 @@ PRs welcome! Please open an issue to discuss ideas or improvements first.
 ## 📄 License
 
 Apache-2.0 — see [LICENSE](LICENSE).
-
----
-
-## 🌴 Stay Tidy
-
-If you have a neat prompt or dotfile trick, share it — small wins add up.
