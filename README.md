@@ -51,25 +51,16 @@ The repo includes a few focused config files and templates.
 
 ### Skills Layout
 
-```
-skills/
-  actions/
-    agent/
-      learn-this/
-    docs/
-      init-readme/
-    git/
-      commit/
-      open-pr/
-    go/
-      gen-godocs/
-      review-godocs/
-    review/
-      review-this/
-  knowledge/
-    go/
-      go-style-guide/
-```
+| Skill | Path | Description |
+| --- | --- | --- |
+| `learn-this` | `skills/actions/agent/learn-this/` | Quickly learn a repo by summarizing purpose, architecture, stack, and conventions |
+| `init-readme` | `skills/actions/docs/init-readme/` | Generate a polished README from repo structure and configs |
+| `commit` | `skills/actions/git/commit/` | Create a Conventional Commit message and perform a commit for staged changes |
+| `open-pr` | `skills/actions/git/open-pr/` | Summarize changes and open a GitHub PR via `gh` |
+| `gen-godocs` | `skills/actions/go/gen-godocs/` | Generate missing idiomatic Go doc comments and output a unified diff |
+| `review-godocs` | `skills/actions/go/review-godocs/` | Audit Go packages for missing/non-idiomatic godoc and report findings |
+| `review-this` | `skills/actions/review/review-this/` | Structured review with ratings, checklist, and improvement suggestions |
+| `go-style-guide` | `skills/knowledge/go/go-style-guide/` | Go engineering style guide for APIs, errors, testing, and tooling |
 
 ## 🧰 Developer Tooling
 
