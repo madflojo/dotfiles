@@ -9,8 +9,7 @@ metadata:
 ---
 
 # init-readme
-
-````markdown
+```markdown
 # Prompt: Generate a Polished README for Any Project
 
 ## Goal
@@ -106,7 +105,6 @@ Keep it accurate (no hallucinations), concise, and developer-friendly.
   ```bash
   go get <module-path>
   ```
-
 - **Node (library/CLI)**
 
   ```bash
@@ -114,21 +112,17 @@ Keep it accurate (no hallucinations), concise, and developer-friendly.
   # or
   pnpm add <package-name>
   ```
-
 - **Python (library/CLI)**
 
   ```bash
   pip install <package-name>
   ```
-
 ### Minimal Example
 
 \<Provide the smallest runnable example. Use the project’s primary entry points.>
-
 ```<language>
 <tiny, working example>
 ```
-
 \<Optional: second example demonstrating a standout feature.>
 
 ---
@@ -213,4 +207,4 @@ If any badge cannot be resolved confidently, **omit it**.
 6. Assemble the README using the **Output Format**.
 7. Validate links (badge URLs, docs references) exist; remove any broken ones.
 8. Output final Markdown only (no extra commentary).
-````
+```

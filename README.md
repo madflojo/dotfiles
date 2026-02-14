@@ -44,10 +44,32 @@ The repo includes a few focused config files and templates.
 | Config | `.tmux.conf` | Status line styling and Screen-style `Ctrl-a` prefix |
 | Config | `.vimrc` | Vim defaults (2-space tabs), Markdown Copilot, rainbow parens |
 | Docs | `AGENTS.md` | A README for agents: context and instructions for AI coding agents working on this project |
-| Skills | `skills/` | Agent Skills library for common workflows (learn, README, commit, PR, review) |
+| Skills | `skills/` | Agent Skills library organized by action area (git, docs, go, agent, review) |
 | Prompts | `.prompts/` | Deprecated; use `skills/` instead |
 
 ---
+
+### Skills Layout
+
+```
+skills/
+  actions/
+    agent/
+      learn-this/
+    docs/
+      init-readme/
+    git/
+      commit/
+      open-pr/
+    go/
+      gen-godocs/
+      review-godocs/
+    review/
+      review-this/
+  knowledge/
+    go/
+      go-style-guide/
+```
 
 ## 🧰 Developer Tooling
 

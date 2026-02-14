@@ -17,25 +17,20 @@ metadata:
 Use the upstream base if set; otherwise fall back to `origin/main`.
 
 - Show commits since base:
-
 ```bash
 git --no-pager log --oneline --decorate --no-merges \
   "$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo origin/main)..HEAD"
 ```
-
 - Show diff summary (files/lines changed):
-
 ```bash
 git --no-pager diff --stat \
   "$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo origin/main)..HEAD"
 ```
-
 ## Create the PR
 
 Some agent environments are sandboxed and may not allow writing to `/tmp`. Prefer piping the PR body over stdin using `--body-file -`.
 
 - Create the PR (edit placeholders as needed). Prefer feeding title/body over stdin to avoid shell escaping/history expansion issues such as `!`:
-
 ```bash
 TITLE='<type(scope): subject // ≤100 chars; optional 1 emoji at end>'
 
@@ -59,7 +54,6 @@ gh pr create \
 - Performance/Security: <notes>
 EOF
 ```
-
 - If the environment doesn’t support stdin/heredocs, prefer `gh pr create --body-file <path>` using a repo-local file (avoid `/tmp`), or as a last resort use a short `--body` string (avoid `!`).
 
 ## Rules

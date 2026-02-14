@@ -1,19 +1,19 @@
 ---
-name: gen-godocs
-description: Generate missing idiomatic Go doc comments (godoc) for packages, types, funcs, methods, vars/consts, and struct fields, and output a unified diff patch. Use when improving Go documentation coverage.
+name: review-godocs
+description: Review Go packages for missing or non-idiomatic godoc comments and produce a concise coverage report and findings without modifying files. Use when auditing Go documentation quality.
 license: Apache-2.0
 compatibility: Requires Go toolchain (go) and git.
 metadata:
-  source: .prompts/gen-godocs.md
+  source: .prompts/review-godocs.md
   version: "1.0"
 ---
 
-# gen-godocs
+# review-godocs
 
-# Prompt: Generate Godoc Comments
+# Prompt: Review Godoc Comments
 
 ## Goal
-Review existing Go documentation and generate missing **godoc** comments so every package, type, field, function, and method is documented in an idiomatic, stdlib-style way.
+Review existing Go documentation and identify missing or non-idiomatic **godoc** comments so every package, type, field, function, and method is documented in an idiomatic, stdlib-style way.
 
 - **Top-level package docs** must use **block comments** `/* ... */` in a dedicated `doc.go`.
 - **All other docs** must use **line comments** `// ...` immediately preceding the declaration.
@@ -27,23 +27,23 @@ Note: Tests are out of scope — see "Scope & Exclusions" below.
 
 ## Tasks
 
-- Create or update `doc.go` with a proper **package comment** (block style).
-- Add or fix `//` doc comments for all missing/incorrect declarations.
-- Generate a **unified diff** (patch) that applies cleanly with `git apply`.
+- Inspect all packages and declarations.
+- Produce a concise **coverage report** (documented vs total) per package and overall.
+- List **missing or non-idiomatic** docs with quick-fix suggestions.
+- Do **not** modify files; propose a patch in a separate section.
 
 ---
 
 ## Scope & Exclusions
 
-- **Exclude test files**: do not add or modify comments in any file matching `*_test.go`.
-- **Exclude test-only symbols**: do not generate comments for `Test*`, `Benchmark*`, or `Fuzz*` functions, even if they appear in non-test files.
+- **Exclude test files**: ignore any file matching `*_test.go` when reviewing coverage and style.
+- **Exclude test-only symbols**: do not report or suggest docs for `Test*`, `Benchmark*`, or `Fuzz*` functions, even if they appear in non-test files.
 - **Build tags**: if a file is guarded by a test-only build tag (e.g., `//go:build test`), treat it as excluded.
-- You may read tests to infer behavior for public APIs, but do not document test code itself.
+- You may read tests to infer intended public API behavior, but do not include test code in coverage metrics or findings.
 
 ---
 
 ## Tooling (you may run)
-
 ```bash
 # Enumerate packages (excluding vendor automatically)
 go list ./...
@@ -58,7 +58,6 @@ go doc -all <pkg>
 git status
 git diff
 ```
-
 ---
 
 ## Style Rules (stdlib-like)
@@ -113,72 +112,18 @@ git diff
 
 ---
 
-## Output: Patch (for "generate godocs")
+## Output: Review Report (for "review godocs")
 
-* A **unified diff** that:
+1. **Coverage Table** (per package)
 
-  * Adds/updates `doc.go` per package (block comment).
-  * Adds/fixes `//` comments for all missing docs.
-  * Keeps imports and formatting intact (`gofmt` implied).
-* A short **commit-style summary** of what was documented.
+   * `pkg path | total decls | documented | coverage %`
+2. **Findings**
 
----
+   * Missing package comment (file/path)
+   * Missing/short/anti-idiomatic docs with a one-line fix suggestion
+3. **Suggested Patch (preview)**
 
-## Comment Templates (fill then refine)
-
-**Package (doc.go)**
-
-```go
-/*
-Package <pkg> <one-sentence summary>.
-
-<Optional short overview (1–3 short paragraphs or bullet list)>
-- <Key capability or concept>
-- <Behavioral guarantees / zero-values / concurrency notes>
-*/
-package <pkg>
-```
-
-**Type**
-
-```go
-// <TypeName> <one-sentence summary>.
-// <Optional: invariants, zero-value behavior, concurrency/perf notes>.
-type <TypeName> struct {
-    // <FieldName> <what it represents, units/range, zero-value meaning>.
-    <FieldName> <Type>
-
-    // <EmbeddedType> provides <short reason for embedding>. (Optional)
-    <EmbeddedType>
-}
-```
-
-**Interface**
-
-```go
-// <InterfaceName> describes <role/behavior/purpose>.
-type <InterfaceName> interface {
-    // <MethodName> <summary of contract and error semantics>.
-    <MethodName>(...) (..)
-}
-```
-
-**Func / Method**
-
-```go
-// <FuncName> <what it does, key side effects, error semantics>.
-func <FuncName>(...) (..) { ... }
-```
-
-**Const / Var Block**
-
-```go
-// <Group purpose (optional): enumeration of states, defaults, etc>.
-const (
-    // <Name> <meaning/units>.
-    <Name> = <value>
-)
-```
+   * Minimal diffs for the most important fixes
 
 ---
 
@@ -187,19 +132,18 @@ const (
 1. **Enumerate packages** with `go list ./...`.
 2. For each package:
 
-   * Ensure `doc.go` exists with a block comment; if missing, create it.
+   * Ignore files matching `*_test.go` and files gated by test-only build tags.
+   * Check whether `doc.go` exists with a block comment; if missing, flag it.
    * Parse files and locate all declarations (types, interfaces, funcs/methods, consts, vars).
    * For **structs**, ensure **each field** has a `//` comment (skip pure embedded fields if intentional).
-   * Add or fix comments to meet the **Style Rules**.
-3. **Generate a patch** (`git diff`) and a coverage report.
-4. If running in **review mode**, output the report + suggested fixes only.
-5. If running in **generate mode**, output the patch (unified diff).
+   * Skip functions named `Test*`, `Benchmark*`, or `Fuzz*` from review and metrics.
+   * Check whether comments meet the **Style Rules**.
 
 ---
 
 ## Quality Gates
 
-* **100% documentation coverage** for packages and top-level exported API.
+* **100% documentation coverage** for packages and top-level exported API (excluding tests).
 * Unexported declarations documented unless intentionally private noise—prefer brief one-liners.
 * First sentence present tense, ends with a period.
 * No trailing whitespace; `gofmt` clean.
