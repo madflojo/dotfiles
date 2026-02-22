@@ -254,23 +254,23 @@ Use when:
 
 Use these supporting documents when deeper detail is needed:
 
-- [references/LOGGING.md](references/LOGGING.md)  
+- [references/LOGGING.md](references/LOGGING.md)
   Logging rules: default “no logging in packages,” exceptions, slog injection.
 
-- [references/ERRORS.md](references/ERRORS.md)  
+- [references/ERRORS.md](references/ERRORS.md)
   Sentinel-first error design, wrapping rules, errors.Is/As contracts.
 
-- [references/CONFIG.md](references/CONFIG.md)  
+- [references/CONFIG.md](references/CONFIG.md)
   Canonical Config struct patterns, constructor validation + defaults.
 
-- [references/INTERFACES.md](references/INTERFACES.md)  
+- [references/INTERFACES.md](references/INTERFACES.md)
   Interface boundaries, driver patterns, testability-first design.
 
-- [references/LAYOUT.md](references/LAYOUT.md)  
+- [references/LAYOUT.md](references/LAYOUT.md)
   File organization, struct field efficiency, package naming guidance.
 
-- [references/BENCHMARKS.md](references/BENCHMARKS.md)  
+- [references/BENCHMARKS.md](references/BENCHMARKS.md)
   Benchmark expectations, templates, performance validation rules.
 
-- [references/REVIEW-CHECKLIST.md](references/REVIEW-CHECKLIST.md)  
-  PR review rubric for human`s and coding agents.
+- [references/REVIEW-CHECKLIST.md](references/REVIEW-CHECKLIST.md)
+  PR review rubric for humans and coding agents.

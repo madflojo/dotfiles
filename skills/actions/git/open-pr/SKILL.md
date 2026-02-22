@@ -22,7 +22,7 @@ git remote -v
 
 - Show current branch:
 ```bash
-git rev-parse --abrev-ref HEAD
+git rev-parse --abbrev-ref HEAD
 ```
 
 ## Review Changes
@@ -40,6 +40,7 @@ git --no-pager log --oneline --decorate --no-merges \
 git --no-pager diff --stat \
   "$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo origin/main)..HEAD"
 ```
+
 ## Create the PR
 
 Some agent environments are sandboxed and may not allow writing to `/tmp`. Prefer piping the PR body over stdin using `--body-file -`.
