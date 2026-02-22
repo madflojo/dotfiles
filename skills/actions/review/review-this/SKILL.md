@@ -7,8 +7,6 @@ metadata:
   version: "1.0"
 ---
 
-# review-this
-
 # Review Code or Documentation
 
 - Familiarize yourself with the project or item (code, docs, or related files).

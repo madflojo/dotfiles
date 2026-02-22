@@ -8,9 +8,22 @@ metadata:
   version: "1.0"
 ---
 
-# open-pr
-
 # Create a Pull Request for Current Branch
+
+Review changes on the current branch and open a pull request using GitHub CLI (`gh`).
+This skill is useful when the user asks to open/create a PR, prepare a PR title/body, or summarize changes for review.
+
+## Review Git State
+
+- Show remotes:
+```bash
+git remote -v
+```
+
+- Show current branch:
+```bash
+git rev-parse --abrev-ref HEAD
+```
 
 ## Review Changes
 
@@ -21,6 +34,7 @@ Use the upstream base if set; otherwise fall back to `origin/main`.
 git --no-pager log --oneline --decorate --no-merges \
   "$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo origin/main)..HEAD"
 ```
+
 - Show diff summary (files/lines changed):
 ```bash
 git --no-pager diff --stat \
@@ -60,4 +74,4 @@ EOF
 
 - Title: Use Conventional Commits `type(scope): subject`; ≤100 chars; no leading emoji; optional one emoji at the end.
 - Description: Summarize what changed and why; include risk/impact as bullets.
-- Style: Professional, concise; at most 1 emoji in title and ≤2 in body.
+- Style: Professional, a bit lighthearted, concise; at most 1 emoji in title and ≤2 in body.

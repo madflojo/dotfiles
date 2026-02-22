@@ -7,8 +7,6 @@ metadata:
   version: "1.0"
 ---
 
-# learn-this
-
 # Learn the Project
 
 - Read the **documentation, code, configurations, Makefiles, tests, and other relevant files**.  

@@ -117,7 +117,7 @@ Example:
 ```
 cmd/myapp/main.go
 pkg/...
-app/...
+pkg/app/...
 ```
 ### Libraries
 - Packages at top-level directories, or under `pkg/` if it improves clarity for newcomers.
@@ -273,4 +273,4 @@ Use these supporting documents when deeper detail is needed:
   Benchmark expectations, templates, performance validation rules.
 
 - [references/REVIEW-CHECKLIST.md](references/REVIEW-CHECKLIST.md)  
-  PR review rubric for humans and coding agents.
+  PR review rubric for human`s and coding agents.

@@ -8,8 +8,6 @@ metadata:
   version: "1.0"
 ---
 
-# commit
-
 # Perform a Git Commit for Staged Changes
 
 ## Tooling:
@@ -17,12 +15,21 @@ metadata:
 ### Viewing Staged Changes:
 
 Use:
+
 ```bash
 git --no-pager diff --staged
 ```
+
+If changes are not staged, ask the user to stage them or if they want to stage all changes with:
+
+```bash
+git add .
+```
+
 ### Committing Changes:
 
 Commit non-interactively by reading the message from stdin (safe with `!`, quotes, backticks, and newlines):
+
 ```bash
 git commit -F - <<'EOF'
 <type(scope): subject>
@@ -30,6 +37,7 @@ git commit -F - <<'EOF'
 <body (optional)>
 EOF
 ```
+
 Avoid passing commit messages via `-m` when the message may contain `!`, quotes, backticks, backslashes, or newlines.
 
 ## Rules
