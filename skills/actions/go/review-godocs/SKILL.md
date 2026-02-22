@@ -8,8 +8,6 @@ metadata:
   version: "1.0"
 ---
 
-# review-godocs
-
 # Prompt: Review Godoc Comments
 
 ## Goal

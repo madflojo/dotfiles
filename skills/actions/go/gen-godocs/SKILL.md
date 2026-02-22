@@ -8,8 +8,6 @@ metadata:
   version: "1.0"
 ---
 
-# gen-godocs
-
 # Prompt: Generate Godoc Comments
 
 ## Goal
@@ -188,6 +186,6 @@ const (
 ## Quality Gates
 
 * **100% documentation coverage** for packages and top-level exported API.
-* Unexported declarations documented unless intentionally private noise—prefer brief one-liners.
+* Unexported declarations should also be documented where it adds clarity, especially for complex logic or non-obvious behavior.
 * First sentence present tense, ends with a period.
 * No trailing whitespace; `gofmt` clean.

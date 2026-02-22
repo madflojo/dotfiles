@@ -8,9 +8,7 @@ metadata:
   version: "1.0"
 ---
 
-# init-readme
-```markdown
-# Prompt: Generate a Polished README for Any Project
+# Create a Polished README.md for Any Project
 
 ## Goal
 Produce a high-quality `README.md`:
@@ -67,6 +65,7 @@ Keep it accurate (no hallucinations), concise, and developer-friendly.
 - **Getting Started**:
   - *Library*: install/import + minimum example
   - *CLI*: install + first command + basic usage
+  - *Service*: install + how to run + basic API call
 - **Structure**: key packages/modules with short descriptions + doc links
 - **Closing**: short call for feedback/PRs
 
@@ -74,6 +73,7 @@ Keep it accurate (no hallucinations), concise, and developer-friendly.
 
 ## Output Format (write exactly this structure)
 
+```markdown
 # <ProjectName> <optional emoji>
 <optional logo image, if found>
 
@@ -167,9 +167,10 @@ PRs welcome! Please see `CONTRIBUTING.md` (if present) and open an issue for dis
 
 ---
 
-## 🌴 Stay <Project Vibe>!
+## <Emoji + Project Vibe>!
 
 \<Short, friendly sign-off encouraging issues/PRs. One tasteful emoji.>
+```
 
 ---
 
@@ -207,4 +208,3 @@ If any badge cannot be resolved confidently, **omit it**.
 6. Assemble the README using the **Output Format**.
 7. Validate links (badge URLs, docs references) exist; remove any broken ones.
 8. Output final Markdown only (no extra commentary).
-```
