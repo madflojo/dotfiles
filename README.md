@@ -30,9 +30,12 @@ The project is organized into focused modules so you can depend only on what you
 | `.vimrc` | Vim defaults, plugins, and editor preferences | [Reference](.vimrc) |
 | `.tmux.conf` | tmux status line and key bindings | [Reference](.tmux.conf) |
 | `.carbon-now.json` | Preset for carbon.now.sh exports | [Reference](.carbon-now.json) |
-| `AGENTS.md` | Context/instructions for AI coding agents | [Reference](AGENTS.md) |
+| `AGENTS.md` | Instruction entry point, TOC, and task-based loading | [Reference](AGENTS.md) |
+| `AGENTS-*.md` | Working style, workflow, validation, review, and architecture guidance | [Loading rules](AGENTS.md#loading-and-routing) |
 | `skills/actions/` | Action-oriented skills (git, docs, go, review, agent) | [Reference](skills/actions/docs/init-readme/SKILL.md) |
 | `skills/knowledge/` | Reference skills and style guides | [Reference](skills/knowledge/go/go-style-guide/SKILL.md) |
+
+Shared companion files resolve beside the canonical `AGENTS.md`, including when accessed through a symlink. `AGENTS-local.md` adds machine-specific guidance and remains untracked and locally ignored.
 
 ---
 
