@@ -13,9 +13,9 @@
 
 ## Loading and routing
 
-Resolve this file's symlink target. Resolve all companion paths beside that canonical file, never from the current working directory. Companion filenames do not imply automatic loading.
+Installation copies the shared `AGENTS.md` and companion files into the user's home directory. Resolve every companion filename and linked section in this policy from `$HOME` (the current user's home directory), regardless of where an agent loads the entry point. Do not resolve symlinks or use the current working directory to locate shared guidance. Companion filenames do not imply automatic loading.
 
-Always read [working style](AGENTS-working-style.md) and `AGENTS-local.md` when present. Local guidance supplements shared policy; keep it untracked, locally ignored, and free of duplicated shared rules.
+Always read `$HOME/AGENTS-working-style.md` and `$HOME/AGENTS-local.md` when present. Local guidance supplements shared policy; keep it untracked, locally ignored, and free of duplicated shared rules.
 
 Section links require that section and its explicit prerequisites; file links require the full file. Read required guidance before its first dependent action. Load additional modules when scope changes; do not load every module by default. On resume, recheck scope, required guidance, authorization, and evidence applicability.
 
@@ -30,6 +30,7 @@ Section links require that section and its explicit prerequisites; file links re
 | Assess current upstream state | [Environment](AGENTS-workflow.md#environment-and-isolation) |
 | Determine whether an ADR is needed; assess a durable architectural choice | [Architecture](AGENTS-architecture.md), [review](AGENTS-review.md) |
 | Run or interpret checks; claim verified results | [Validation](AGENTS-validation.md), [environment](AGENTS-workflow.md#environment-and-isolation) |
+| Create, update, install, or audit skills | [Skill maintenance](AGENTS-workflow.md#skill-maintenance), [validation](AGENTS-validation.md), [review](AGENTS-review.md) |
 | Evaluate corrections, missing capabilities, reusable failures, or recurring improvements | [Workflow: continuous improvement](AGENTS-workflow.md#continuous-improvement) |
 
 If required guidance is missing or unreadable, report the path and block dependent actions. Continue unaffected work. An absent optional local file is normal.

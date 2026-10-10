@@ -5,6 +5,7 @@
 - [Required checks](#required-checks)
 - [TDD flow](#tdd-flow)
 - [Task-specific verification](#task-specific-verification)
+- [Skill evaluations](#skill-evaluations)
 - [Verification evidence](#verification-evidence)
 
 ## Required checks
@@ -35,6 +36,12 @@ Test acceptance criteria and relevant happy, error, boundary, and regression pat
 - **Documentation/formatting:** check accuracy, links, formatting, and rendered output where applicable. No artificial behavior test is required.
 
 Choose focused checks for each increment; complete repository-required checks before delivery or authorized commits. Name unavailable checks and their impact. Coverage percentages alone do not establish correctness.
+
+## Skill evaluations
+
+For material skill behavior changes, define representative success, failure, and boundary scenarios before editing. Include triggering and non-triggering requests where relevant, and evaluate on models actually used. Compare with a no-skill baseline when assessing whether the skill improves outcomes.
+
+Use isolated repositories or controlled substitutes for mutating workflows; an evaluation does not authorize real publication. Cover concrete risks such as partial staging, incorrect PR bases, divergent branches, draft-only requests, and ambiguous create outcomes. Distinguish structural checks, scenario review, and actual agent executions; claim behavioral reliability only to the extent tested.
 
 ## Verification evidence
 

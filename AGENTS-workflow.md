@@ -7,6 +7,7 @@
 - [Change sizing and planning artifacts](#change-sizing-and-planning-artifacts)
 - [Engineering standards](#engineering-standards)
 - [Documentation](#documentation)
+- [Skill maintenance](#skill-maintenance)
 - [Continuous improvement](#continuous-improvement)
 - [External writes](#external-writes)
 
@@ -66,6 +67,14 @@ Follow [independent review stages](AGENTS-review.md#independent-review-stages) b
 - Before finishing documentation, remove repetition, tighten long passages, and check that different audiences can find the decision and its consequences.
 - Select and name documentation review lenses from the reviewer persona index according to the audience and risk. Routine documentation uses a bounded intended-reader clarity and accuracy review, combining applicable major steps into one adversarial review rather than a panel. For substantial architecture documentation, include the intended reader and relevant technical perspectives; reconcile conflicting recommendations against the audience and goal.
 
+## Skill maintenance
+
+- Identify the maintained source and compare it with installed copies before changing a skill. Preserve useful local improvements, report drift, and follow the source's versioning and installation conventions. Do not silently overwrite either copy.
+- Keep entrypoints concise: state triggers, core obligations, workflow, and direct links to supporting material. Move large templates and specialized detail into references or assets; give references over 100 lines a table of contents. Compression must preserve authority, exceptions, and failure handling.
+- Match prescription to risk: allow judgment in analysis, use adaptable templates for prose, and specify exact sequences for fragile operations. Keep standalone skills usable without assuming this personal policy is installed.
+- Check required tools, versions, authentication, and runtime limitations before use. Install dependencies only within authorized scope and supported environments; otherwise report a fallback or blocker.
+- Validate behavior with [skill evaluations](AGENTS-validation.md#skill-evaluations), not only Markdown or link checks. Avoid adding scripts or dependencies when existing tools suffice.
+
 ## Continuous improvement
 
 - Use `self-improvement` for corrections, outdated knowledge, missing capabilities, completed failures with reusable lessons, and better recurring approaches. Review relevant learnings before major work.
@@ -77,7 +86,10 @@ Follow [independent review stages](AGENTS-review.md#independent-review-stages) b
 ## External writes
 
 - Use the `fun-commit-msg` and `fun-pull-requests` skills when creating commits or pull requests.
+- Distinguish drafting content from publishing it. Reuse existing user authorization within its scope; do not infer push or publication authority from a request to draft text.
+- For PRs, determine the intended integration base from explicit instructions, the existing PR, or repository conventions. A branch's tracking upstream is not necessarily its PR base. Use a merge-base/three-dot diff for PR file changes and a two-dot range for commit listing.
+- Before retrying an ambiguous external create, inspect remote state for an already-created resource; avoid duplicate writes.
 - After comments, issue creates/edits, ticket transitions, or PR creates/edits, capture the canonical URL/ID and read back remotely.
-- Verify stored title, body, comment text, links, formatting, labels, assignee, and status as applicable. Command/API success alone is insufficient.
+- Verify stored title, body, comment text, links, formatting, labels, assignee, status, and PR base/head as applicable. Command/API success alone is insufficient.
 - Correct empty, truncated, malformed, or otherwise incorrect content and read it back again before reporting success.
 - If remote verification is unavailable or still fails, report the action as unverified.

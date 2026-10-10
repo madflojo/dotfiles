@@ -35,7 +35,17 @@ The project is organized into focused modules so you can depend only on what you
 | `skills/actions/` | Action-oriented skills (git, docs, go, review, agent) | [Reference](skills/actions/docs/init-readme/SKILL.md) |
 | `skills/knowledge/` | Reference skills and style guides | [Reference](skills/knowledge/go/go-style-guide/SKILL.md) |
 
-Shared companion files resolve beside the canonical `AGENTS.md`, including when accessed through a symlink. `AGENTS-local.md` adds machine-specific guidance and remains untracked and locally ignored.
+## Agent guidance installation
+
+Copy the shared guidance as a complete set into the user's home directory. First inspect and back up existing destination files. If a destination is a symlink, remove only the link before copying; plain `cp` follows destination symlinks and does not migrate them to regular files. Apply the same precaution to separate agent entrypoints. Preserve `AGENTS-local.md` separately. From this repository, after preparing the destinations:
+
+```sh
+cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md AGENTS-validation.md AGENTS-review.md AGENTS-architecture.md "$HOME/"
+```
+
+Review existing destination files before copying; the command replaces files with matching names. Repeat the copy when updating the shared policy so the entrypoint and companions stay consistent. Configure each agent to load `$HOME/AGENTS.md`; if it requires a separate entrypoint location, copy `AGENTS.md` there too. All companion paths still resolve from `$HOME`, without symlink discovery.
+
+Create `$HOME/AGENTS-local.md` separately for machine-specific additions. Installation must preserve it. Keep any repository-local source copy untracked and locally ignored; do not include it in the shared copy command.
 
 ---
 
