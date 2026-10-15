@@ -32,6 +32,7 @@ The project is organized into focused modules so you can depend only on what you
 | `.carbon-now.json` | Preset for carbon.now.sh exports | [Reference](.carbon-now.json) |
 | `AGENTS.md` | Instruction entry point, TOC, and task-based loading | [Reference](AGENTS.md) |
 | `AGENTS-*.md` | Working style, workflow, validation, review, and architecture guidance | [Loading rules](AGENTS.md#loading-and-routing) |
+| `scheduled-prompts/` | Saved prompts for scheduled use across agent harnesses | [Session Nudge supervisor](scheduled-prompts/session-nudge.md) |
 | `skills/actions/` | Action-oriented skills (git, docs, go, review, agent) | [Reference](skills/actions/docs/init-readme/SKILL.md) |
 | `skills/knowledge/` | Reference skills and style guides | [Reference](skills/knowledge/go/go-style-guide/SKILL.md) |
 
