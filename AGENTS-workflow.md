@@ -62,6 +62,8 @@ Follow [independent review stages](AGENTS-review.md#independent-review-stages) b
 ## Documentation
 
 - Write for the intended audience, avoid unnecessary jargon, and explain unavoidable domain terms simply.
+- Keep audience-facing content focused on its subject. Exclude drafting history, prompt instructions, agent or tool orchestration, internal review personas, approval choreography, validation logs, and commentary about how the content was produced. Put authoring status and verification evidence in the task conversation or designated internal records instead.
+- Include process details only when the user requests them, they are the subject the audience needs to understand, or a required disclosure applies. Preserve reader-relevant sources, methodology, limitations, and uncertainty; do not confuse these with internal authoring notes.
 - Preserve intentional user edits, deletions, scope, and structure; do not restore or narrow material merely because supporting details are incomplete, and label unknowns explicitly.
 - Preserve operational meaning, direction, causality, concurrency, and active states when simplifying rendered artifacts. Inspect output before claiming correctness.
 - Before finishing documentation, remove repetition, tighten long passages, and check that different audiences can find the decision and its consequences.

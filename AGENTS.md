@@ -41,4 +41,5 @@ If required guidance is missing or unreadable, report the path and block depende
 - Inspect repository status and remotes before synchronizing or editing. Preserve user-owned edits, deletions, scope, branches, worktrees, and untracked files.
 - Separate verified facts from inference, proposals, and unknowns. Name material evidence gaps and source dates or revisions. Never report blocked or unrun verification as success.
 - Use the `caveman` skill for concise interactions and `learn-this-project` for repository discovery. Keep persisted guidance in normal prose; compress repetition without weakening obligations, exceptions, or authority.
+- Keep authoring-process details out of audience-facing content; follow the [audience boundary](AGENTS-workflow.md#documentation).
 - Read relevant repository instructions, tool configuration, and installed skills before acting. Repository-specific rules and pinned tooling take precedence over generic guidance.

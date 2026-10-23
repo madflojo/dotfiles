@@ -33,7 +33,7 @@ Test acceptance criteria and relevant happy, error, boundary, and regression pat
 - **Refactor:** establish existing behavior with current tests; add characterization tests where coverage is insufficient. Do not invent a failing feature test for unchanged behavior.
 - **Concurrency:** test ordering, ownership, cancellation, and lifecycle where affected. Use deterministic synchronization and supported race checks.
 - **Configuration/workflow:** validate syntax and affected behavior. Local validation and hosted execution establish different claims. A skipped run does not prove recovery.
-- **Documentation/formatting:** check accuracy, links, formatting, and rendered output where applicable. No artificial behavior test is required.
+- **Documentation/formatting:** check accuracy, links, formatting, and rendered output where applicable. Before delivery, remove internal authoring-process details from audience-facing content while preserving required disclosures and reader-relevant methodology, sources, and limitations. No artificial behavior test is required.
 
 Choose focused checks for each increment; complete repository-required checks before delivery or authorized commits. Name unavailable checks and their impact. Coverage percentages alone do not establish correctness.
 
