@@ -1,29 +1,12 @@
 # dotfiles 🧰
 
-**Terminal/editor configs and reusable Agent Skills for consistent dev workflows.**
+**Terminal and editor configs, shared agent guidance, and scheduled prompts.**
 
 [![License](https://img.shields.io/github/license/madflojo/dotfiles)](LICENSE)
 
 ---
 
-Setting up a new machine shouldn't mean hunting for dotfiles or rewriting the same workflow notes. This repo keeps a small, focused set of configs plus a library of Agent Skills for common tasks like reviews, PRs, commits, and repo discovery.
-
-It's intentionally minimal: a few trusted config files and a skills library that keeps work predictable without slowing you down.
-
----
-
-## 🧠 What is dotfiles?
-A lightweight collection of Vim/tmux configs and practical Agent Skills for consistent, fast developer workflows.
-
-- Centralizes Vim and tmux preferences for frictionless setup
-- Provides reusable skills for PRs, commits, reviews, and repo discovery
-- Encourages concise, conventional, and verifiable practices (IDD/TDD mindset)
-
----
-
 ## 🧱 Structure
-
-The project is organized into focused modules so you can depend only on what you need.
 
 | Module/Path | Description | Docs |
 | --- | --- | --- |
@@ -33,8 +16,6 @@ The project is organized into focused modules so you can depend only on what you
 | `AGENTS.md` | Instruction entry point, TOC, and task-based loading | [Reference](AGENTS.md) |
 | `AGENTS-*.md` | Working style, workflow, validation, review, and architecture guidance | [Loading rules](AGENTS.md#loading-and-routing) |
 | `scheduled-prompts/` | Saved prompts for scheduled use across agent harnesses | [Session Nudge supervisor](scheduled-prompts/session-nudge.md) |
-| `skills/actions/` | Action-oriented skills (git, docs, go, review, agent) | [Reference](skills/actions/docs/init-readme/SKILL.md) |
-| `skills/knowledge/` | Reference skills and style guides | [Reference](skills/knowledge/go/go-style-guide/SKILL.md) |
 
 ## Agent guidance installation
 
@@ -47,6 +28,18 @@ cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md AGENTS-validation.md AGE
 Review existing destination files before copying; the command replaces files with matching names. Repeat the copy when updating the shared policy so the entrypoint and companions stay consistent. Configure each agent to load `$HOME/AGENTS.md`; if it requires a separate entrypoint location, copy `AGENTS.md` there too. All companion paths still resolve from `$HOME`, without symlink discovery.
 
 Create `$HOME/AGENTS-local.md` separately for machine-specific additions. Installation must preserve it. Keep any repository-local source copy untracked and locally ignored; do not include it in the shared copy command.
+
+## Standalone Agent Skills
+
+Each skill repository has its own installation instructions.
+
+| Workflow | Repository |
+| --- | --- |
+| Write Conventional Commit messages and commit staged changes | [fun-commit-msg](https://github.com/madflojo/fun-commit-msg) |
+| Draft and open GitHub pull requests | [fun-pull-requests](https://github.com/madflojo/fun-pull-requests) |
+| Get oriented in a codebase | [learn-this-project](https://github.com/madflojo/learn-this-project) |
+| Review code and documentation | [review-this](https://github.com/madflojo/review-this) |
+| Write and review Go code, including Godoc comments | [go-style-agent-skill](https://github.com/madflojo/go-style-agent-skill) |
 
 ---
 
