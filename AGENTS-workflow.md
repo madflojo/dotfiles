@@ -4,6 +4,8 @@
 
 - [Environment and isolation](#environment-and-isolation)
 - [Build sequence](#build-sequence)
+  - [Shape and plan](#shape-and-plan)
+  - [Build and verify](#build-and-verify)
 - [Change sizing and planning artifacts](#change-sizing-and-planning-artifacts)
 - [Engineering standards](#engineering-standards)
 - [Documentation](#documentation)
@@ -30,21 +32,36 @@ Follow repository artifact, versioning, approval, and delivery conventions. Git 
 
 ## Build sequence
 
-1. **Discover and scope:** inspect conventions and decisions; define behavior and acceptance criteria. Apply [ADR criteria](AGENTS-architecture.md#architecture-decisions).
-2. **Decide architecture when needed:** prepare a separate ADR PR before implementation. Review alternatives and consequences with Systems architect and, for system design, SRE/P.R.O.M.S. Wait for human acceptance and ADR merge unless repository lifecycle explicitly differs. Agent review is evidence, not approval. Without publication authority, prepare the ADR and report the pending gate. Skip this stage for accepted decisions.
-3. **Interface-driven design (IDD):** specify behavior, inputs, outputs, errors, compatibility, and failure boundaries before implementation. Use Senior engineer and relevant consumer perspectives. Review the contract independently before building; reference applicable accepted ADRs.
-4. **Plan delivery:** define coherent, testable increments and their verification. Carry applicable P.R.O.M.S. criteria. Use Team Lead for sequencing/coordination risks; follow repository plan conventions.
-5. **Test-driven development (TDD):** follow [baseline, red, green, and refactor](AGENTS-validation.md#tdd-flow) for behavior changes. Cover happy, error, boundary, and regression cases. Do not add public surface solely for tests. Use [task-specific verification](AGENTS-validation.md#task-specific-verification) for refactors, configuration, and documentation.
-6. **Review and verify:** check each coherent increment and simplify/harden its diff. Use the relevant independent reviewer; SRE covers behavior and non-functional evidence when P.R.O.M.S. applies. Fix in-scope findings and rerun checks. Reassess an ADR only for new architectural choices.
-7. **Deliver:** report behavior, verification, and unresolved risks. Authorized implementation PRs reference accepted ADRs and versioned plans. Keep implementation separate from ADR PRs; ADR acceptance does not authorize implementation merge.
+Follow the [independent review stages](AGENTS-review.md#independent-review-stages) and [evidence checkpoints](AGENTS-validation.md#evidence-checkpoints). Small, reversible changes may combine applicable design, planning, and review steps.
 
-Follow [independent review stages](AGENTS-review.md#independent-review-stages) before moving beyond each applicable major step.
+### Shape and plan
+
+1. **Capture requirements.** Inspect repository conventions and accepted decisions. Define the outcome, constraints, and acceptance criteria. Sketch a target outline with rough sequencing, dependencies, and feasibility risks.
+2. **Design at the applicable layers.** Use [architecture layers and contracts](AGENTS-architecture.md#architecture-layers-and-contracts). Apply interface-driven design (IDD) at each layer to settle the contracts downstream work depends on. Carry applicable P.R.O.M.S. criteria into the design and plan.
+3. **Resolve decisions as they arise.** Apply the [ADR criteria and acceptance gate](AGENTS-architecture.md#architecture-decisions) at every layer. Reuse applicable accepted decisions. Without publication authority, prepare the ADR and report the pending gate.
+4. **Plan delivery.** Turn the reviewed design and contracts into independently verifiable increments. Map each increment to dependencies, acceptance criteria, and checks. Include rollout and rollback steps where relevant.
+
+### Build and verify
+
+For each increment:
+
+1. **Refine the contract (IDD).** Specify observable behavior, inputs, outputs, errors, compatibility, and failure boundaries from the relevant consumer perspectives. Settle deferred package or library contracts before writing tests.
+2. **Run the TDD loop.** Follow [baseline, red, green, and refactor](AGENTS-validation.md#tdd-flow) for behavior changes. Cover relevant happy, error, boundary, and regression cases. Do not add public surface solely for tests. Use [task-specific verification](AGENTS-validation.md#task-specific-verification) for refactors, configuration, and documentation.
+3. **Review and repeat.** Simplify and harden the diff. Check the completed increment against its contract and applicable P.R.O.M.S. criteria. Fix in-scope findings and rerun affected checks. If evidence invalidates a reviewed contract or architectural decision, return to shaping for the affected work and revise the plan.
+
+**Deliver** with resulting behavior, verification evidence, and remaining risks. Authorized implementation PRs reference applicable accepted ADRs and versioned plans. Keep implementation separate from ADR PRs; ADR acceptance does not authorize implementation merge.
 
 ## Change sizing and planning artifacts
 
 - Use the smallest coherent, independently reviewable/testable increments. Each needs one purpose, a bounded diff, acceptance criteria, and focused verification.
 - Keep increments independently mergeable or reversible where practical. Exclude unrelated refactors, features, and initiatives.
-- Follow repository conventions for plans, specifications, ledgers, and planning notes. Commit only with user authorization. Without conventions, keep them outside tracked paths or in an existing ignored workspace unless explicitly asked to version them; do not stage or commit by default.
+- Reuse suitable existing artifacts. A bounded change can use an issue or short chat note. For larger work, choose artifacts by need:
+  - **Requirements brief or PRD:** align stakeholders on goals, scope, and acceptance criteria. Keep the target outline here unless sequencing or feasibility needs a separate artifact.
+  - **Design and contracts:** record boundaries others rely on in the usual location, such as a design doc, API schema, or package documentation. One design can cover several layers.
+  - **ADR:** record a decision only when it meets the ADR criteria. Link to the design instead of repeating it.
+  - **Feature or delivery plan:** record increments when work spans multiple steps or needs coordination. Use an issue, epic, or plan section for a feature as appropriate.
+  - **Verification evidence:** summarize material checks in the task or PR. Create a separate tracked record only when required or requested.
+- Follow repository conventions for plans, specifications, and evidence. Use `.plans/` only where established. Without conventions, keep working artifacts in chat, outside tracked paths, or in an existing ignored workspace unless explicitly asked to version them. Do not stage unversioned working artifacts. Commit only with user authorization.
 
 ## Engineering standards
 

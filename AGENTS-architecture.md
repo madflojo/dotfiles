@@ -2,9 +2,18 @@
 
 ## Table of contents
 
+- [Architecture layers and contracts](#architecture-layers-and-contracts)
 - [Architecture decisions](#architecture-decisions)
 
 Read [review](AGENTS-review.md) before architectural assessment. Its P.R.O.M.S. requirements apply to system-design ADRs.
+
+## Architecture layers and contracts
+
+- **High-level solution architecture:** choose the overall approach. Define system boundaries, ownership, dependencies, and external integration commitments.
+- **Detailed system design:** define component interactions, data and state flows, service and integration contracts, and failure behavior. Set measurable P.R.O.M.S. criteria where applicable.
+- **Low-level implementation architecture:** define package and library responsibilities, interfaces, state ownership, lifecycle, and concurrency guarantees where they matter. Settle contracts early if another team, package, or increment depends on them. Refine the rest during the affected increment.
+
+Apply IDD at each applicable layer. Define contracts at the detail needed by their consumers. A layer does not require a separate document or ADR.
 
 ## Architecture decisions
 
@@ -16,4 +25,5 @@ Use a plan for delivery within established architecture. Use an Architecture Dec
 - For analysis or plan-only work, recommend an ADR only when these criteria are met and describe the decision without creating tracked files. Write an ADR only when implementation or documentation changes are authorized.
 - Follow the repository's ADR template, location, and lifecycle; amend or supersede an accepted ADR instead of rewriting its history unless repository convention explicitly permits in-place revision.
 - When no convention exists, use the next unused `docs/adr/NNNN-short-title.md` filename; include context, decision, alternatives, rationale, consequences, P.R.O.M.S. assessment for system design, and validation or revisit conditions.
+- By default, create a separate authorized ADR PR and wait for human acceptance and merge before implementing dependent work. Follow an explicitly different repository lifecycle where established. Agent review does not grant acceptance or publication authority.
 - Use an ADR's constraints to shape the implementation contract and plan. Keep ADRs as durable repository documentation, accepted through the decision stage before their implementation.

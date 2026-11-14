@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Required checks](#required-checks)
+- [Evidence checkpoints](#evidence-checkpoints)
 - [TDD flow](#tdd-flow)
 - [Task-specific verification](#task-specific-verification)
 - [Skill evaluations](#skill-evaluations)
@@ -16,6 +17,15 @@
 - Distinguish product defects, fragile tests, and tooling, authentication, or environment blockers. Unrun or blocked checks are not success.
 - Rerun relevant checks after review fixes. Never claim success without fresh evidence.
 - Inspect rendered diagrams and documents before claiming correctness. For remote writes, follow [external-write verification](AGENTS-workflow.md#external-writes).
+
+## Evidence checkpoints
+
+- **Shaping exit:** map each planned increment to acceptance criteria and a verification method. Resolve upstream contracts and clear applicable ADR acceptance gates before building dependent work. Check machine-readable contracts for validity and compatibility where supported.
+- **Increment ready:** make the affected contract testable. For behavior changes, establish the baseline and confirm the new test fails for the intended reason before implementing.
+- **Increment complete:** pass any new tests and required affected checks on the revision being delivered. Include contract, compatibility, race, or performance checks where applicable. Rerun affected checks after fixes.
+- **Delivery ready:** confirm required checks and reviews apply to the final revision. Report blocked or unrun checks and unresolved risks. Follow the applicable publication and merge authorization rules.
+
+Use repository runners and CI for objective checks where practical. Keep machine results, independent judgment, and human authorization distinct. A blocked required check leaves its checkpoint unresolved; continue only work that does not depend on it.
 
 ## TDD flow
 

@@ -9,7 +9,19 @@
 
 ## Independent review stages
 
-Before each applicable major step proceeds, require one independent adversarial sub-agent review: scope and acceptance criteria (Product Owner), architecture (Systems architect and SRE when P.R.O.M.S. applies), interface contract (Senior engineer), delivery plan (Team Lead), completed TDD implementation increments (Senior engineer or SRE), and delivery readiness (Reviewer or approver). Challenge assumptions, simplicity, failure modes, evidence gaps, and residual risks. Combine implementation verification and delivery readiness in one review when they assess the same unchanged artifact; do not review every individual test or edit. Small, reversible changes may combine applicable steps into one bounded review and do not need an ADR or a review panel.
+Require one independent adversarial sub-agent review at each applicable major stage before dependent work proceeds:
+
+| Group | Review stage | Lens |
+| --- | --- | --- |
+| Shape and plan | Scope and acceptance criteria | Product Owner |
+| Shape and plan | Architecture at each applicable layer | Systems architect |
+| Shape and plan | Contracts and consumer guarantees | Senior engineer |
+| Shape and plan | Delivery sequencing | Team Lead |
+| Build and verify | Refined contracts that introduce a meaningful boundary or risk | Senior engineer |
+| Build and verify | Completed increment | Senior engineer or SRE |
+| Build and verify | Delivery readiness | Reviewer or approver |
+
+Challenge assumptions, simplicity, failure paths, evidence gaps, and residual risks. Use the SRE review where P.R.O.M.S. applies. Use the [evidence checkpoints](AGENTS-validation.md#evidence-checkpoints) alongside review. Combine applicable reviews for small, reversible changes or when the same unchanged artifact supports increment verification and delivery readiness. Do not review every test or edit. Small changes do not need a review panel or an ADR unless the ADR criteria apply.
 
 ## Reviewer persona index
 
