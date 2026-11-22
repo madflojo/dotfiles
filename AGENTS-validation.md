@@ -13,7 +13,8 @@
 
 - Read repository instructions and tool configuration. Prefer repository task runners and pinned tools over generic guidance.
 - Validate observable behavior at boundaries, including happy, error, boundary, and regression cases. Keep checks deterministic.
-- Before committing, require the repository's available tests, coverage, concurrency or race checks, lint, static analysis, and type checks to pass.
+- Before committing a completed increment, require the repository's available tests, coverage, concurrency or race checks, lint, static analysis, and type checks to pass.
+- A preservation-only `WIP` checkpoint may precede completed checks or review under the [checkpoint policy](AGENTS-workflow.md#local-checkpoints). Record outstanding evidence; all completion and delivery gates remain in force.
 - Distinguish product defects, fragile tests, and tooling, authentication, or environment blockers. Unrun or blocked checks are not success.
 - Rerun relevant checks after review fixes. Never claim success without fresh evidence.
 - Inspect rendered diagrams and documents before claiming correctness. For remote writes, follow [external-write verification](AGENTS-workflow.md#external-writes).
@@ -45,7 +46,7 @@ Test acceptance criteria and relevant happy, error, boundary, and regression pat
 - **Configuration/workflow:** validate syntax and affected behavior. Local validation and hosted execution establish different claims. A skipped run does not prove recovery.
 - **Documentation/formatting:** check accuracy, links, formatting, and rendered output where applicable. Before delivery, remove internal authoring-process details from audience-facing content while preserving required disclosures and reader-relevant methodology, sources, and limitations. No artificial behavior test is required.
 
-Choose focused checks for each increment; complete repository-required checks before delivery or authorized commits. Name unavailable checks and their impact. Coverage percentages alone do not establish correctness.
+Choose focused checks for each increment; complete repository-required checks before delivery or completed-increment commits; preservation-only checkpoints follow the explicit exception above. Name unavailable checks and their impact. Coverage percentages alone do not establish correctness.
 
 ## Skill evaluations
 

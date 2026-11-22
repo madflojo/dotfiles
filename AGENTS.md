@@ -37,7 +37,7 @@ If required guidance is missing or unreadable, report the path and block depende
 
 ## Universal rules
 
-- Follow explicit repository conventions over this personal workflow. Repository conventions do not authorize commits, pushes, PR creation, or merges; require user authorization for those actions.
+- Follow explicit repository conventions over this personal workflow. Local checkpoint commits for authorized work are pre-authorized under the [checkpoint policy](AGENTS-workflow.md#local-checkpoints). Pushes, PR creation, merges, and publication still require separate user authorization. Honor explicit task or repository restrictions on local commits.
 - Inspect repository status and remotes before synchronizing or editing. Preserve user-owned edits, deletions, scope, branches, worktrees, and untracked files.
 - Separate verified facts from inference, proposals, and unknowns. Name material evidence gaps and source dates or revisions. Never report blocked or unrun verification as success.
 - Use the `caveman` skill for concise interactions and `learn-this-project` for repository discovery. Keep persisted guidance in normal prose; compress repetition without weakening obligations, exceptions, or authority.

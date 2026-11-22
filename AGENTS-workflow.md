@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Environment and isolation](#environment-and-isolation)
+- [Local checkpoints](#local-checkpoints)
 - [Build sequence](#build-sequence)
   - [Shape and plan](#shape-and-plan)
   - [Build and verify](#build-and-verify)
@@ -25,10 +26,19 @@ Read [validation](AGENTS-validation.md) and [review](AGENTS-review.md) before ch
 - Inspect repository status and remotes before synchronizing or editing; preserve user-owned changes, untracked files, branches, and worktrees.
 - When upstream state matters, identify and fetch the authoritative remote; verify exact revision or ancestry before assessment or changes. If the checkout is dirty, use a clean worktree or temporary clone.
 - When multiple initiatives are active, isolate each initiative in its own branch and worktree.
-- Create worktrees in unique OS-managed temporary directories (`mktemp -d`), outside the repository, its parent, and home. Record exact paths. When safely complete, remove or archive through Git or managed tooling; never delete a broad temporary root.
+- Create worktrees in unique OS-managed temporary directories (`mktemp -d`), outside the repository, its parent, and home. Record exact paths. Treat these directories as disposable and subject to cleanup on reboot; preserve work through local checkpoints in the surviving shared repository. When safely complete, remove or archive through Git or managed tooling; never delete a broad temporary root.
 - Give editing sub-agents explicit file ownership and separate worktrees; never let concurrent writers share a checkout.
 
 Follow repository artifact, versioning, approval, and delivery conventions. Git publication still requires user authorization.
+
+## Local checkpoints
+
+- Local checkpoint commits are pre-authorized for work within the user's requested scope unless the user or repository explicitly restricts them. Commit frequently after coherent milestones, accepted revisions, and before pausing, handing off, or ending a work session with changes. Do not wait for the entire task to finish.
+- Keep checkpoints on a named task branch whose shared Git repository lives outside temporary storage. A temporary checkout may disappear on reboot; recreate it from that branch. Local commits do not protect against loss of the shared repository or disk.
+- Inspect and stage only task-owned changes, including new drafts, source files, diagrams, and required assets. Preserve unrelated edits and partial staging; never blanket-stage a mixed checkout or include secrets, caches, or dependencies.
+- Keep required recovery inputs and reusable helpers inside the worktree and track them. Preserve intentionally ignored or unversioned working notes separately in durable local storage when needed; do not rely on sibling files in the temporary parent directory. Follow repository artifact conventions without committing disposable plans by default.
+- Validate completed increments normally. If work must pause before checks or review finish, make an explicitly labeled `WIP` checkpoint recording failed, blocked, or unrun checks and remaining work. This preserves progress; it does not satisfy delivery, review, or merge gates. Do not bypass hooks to force a checkpoint; report the blocker and preserve a durable local snapshot instead.
+- Verify the commit and branch reference, then inspect remaining modified and untracked files for task work that was missed. Report the checkpoint hash and any remaining exposure. Checkpoint authorization does not authorize pushes, PRs, merges, or publication.
 
 ## Build sequence
 
@@ -49,6 +59,8 @@ For each increment:
 2. **Run the TDD loop.** Follow [baseline, red, green, and refactor](AGENTS-validation.md#tdd-flow) for behavior changes. Cover relevant happy, error, boundary, and regression cases. Do not add public surface solely for tests. Use [task-specific verification](AGENTS-validation.md#task-specific-verification) for refactors, configuration, and documentation.
 3. **Review and repeat.** Simplify and harden the diff. Check the completed increment against its contract and applicable P.R.O.M.S. criteria. Fix in-scope findings and rerun affected checks. If evidence invalidates a reviewed contract or architectural decision, return to shaping for the affected work and revise the plan.
 
+Checkpoint each coherent increment and before pausing under [local checkpoints](#local-checkpoints).
+
 **Deliver** with resulting behavior, verification evidence, and remaining risks. Authorized implementation PRs reference applicable accepted ADRs and versioned plans. Keep implementation separate from ADR PRs; ADR acceptance does not authorize implementation merge.
 
 ## Change sizing and planning artifacts
@@ -61,7 +73,7 @@ For each increment:
   - **ADR:** record a decision only when it meets the ADR criteria. Link to the design instead of repeating it.
   - **Feature or delivery plan:** record increments when work spans multiple steps or needs coordination. Use an issue, epic, or plan section for a feature as appropriate.
   - **Verification evidence:** summarize material checks in the task or PR. Create a separate tracked record only when required or requested.
-- Follow repository conventions for plans, specifications, and evidence. Use `.plans/` only where established. Without conventions, keep working artifacts in chat, outside tracked paths, or in an existing ignored workspace unless explicitly asked to version them. Do not stage unversioned working artifacts. Commit only with user authorization.
+- Follow repository conventions for plans, specifications, and evidence. Use `.plans/` only where established. Without conventions, keep working artifacts in chat, outside tracked paths, or in an existing ignored workspace unless explicitly asked to version them. Do not stage unversioned working artifacts. Apply the standing authorization and boundaries in [local checkpoints](#local-checkpoints).
 
 ## Engineering standards
 
