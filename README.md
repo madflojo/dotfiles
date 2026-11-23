@@ -16,6 +16,7 @@
 | `AGENTS.md` | Instruction entry point, TOC, and task-based loading | [Reference](AGENTS.md) |
 | `AGENTS-*.md` | Working style, workflow, validation, review, and architecture guidance | [Loading rules](AGENTS.md#loading-and-routing) |
 | `scheduled-prompts/` | Saved prompts for scheduled use across agent harnesses | [Session Nudge supervisor](scheduled-prompts/session-nudge.md) |
+| `skills/` | Bundled engineering review and Material 3 web design skills | [Bundled agent skills](#bundled-agent-skills) |
 
 ## Agent guidance installation
 
@@ -28,6 +29,24 @@ cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md AGENTS-validation.md AGE
 Review existing destination files before copying; the command replaces files with matching names. Repeat the copy when updating the shared policy so the entrypoint and companions stay consistent. Configure each agent to load `$HOME/AGENTS.md`; if it requires a separate entrypoint location, copy `AGENTS.md` there too. All companion paths still resolve from `$HOME`, without symlink discovery.
 
 Create `$HOME/AGENTS-local.md` separately for machine-specific additions. Installation must preserve it. Keep any repository-local source copy untracked and locally ignored; do not include it in the shared copy command.
+
+## Bundled agent skills
+
+| Skill | Purpose |
+| --- | --- |
+| [engineering-tribunal](skills/engineering-tribunal/SKILL.md) | Independent engineering reviews with risk-based personas, RACI selection, and consumer-feedback checkpoints |
+| [m3](skills/m3/SKILL.md) | Design, implement, migrate, and review Material 3 web interfaces |
+
+Copy a selected skill directory into your agent's skill directory. For Codex,
+use `~/.codex/skills/`. Inspect and back up any existing destination first;
+replace the complete skill directory when updating so references stay together.
+For a new installation from this repository:
+
+```sh
+mkdir -p "$HOME/.codex/skills"
+cp -R skills/engineering-tribunal "$HOME/.codex/skills/"
+cp -R skills/m3 "$HOME/.codex/skills/"
+```
 
 ## Standalone Agent Skills
 

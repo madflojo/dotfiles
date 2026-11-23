@@ -1,0 +1,41 @@
+{
+  "skill_name": "m3",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Design an M3 web incident dashboard with a list and incident details, usable on phones and desktops. Give a design specification only.",
+      "expected_output": "Use list-detail adaptation, semantic roles, action hierarchy, loading/empty/error states and accessible interactions. Do not edit app code or install dependencies.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Our React app uses an existing accessible dialog and CSS variables. Make its settings form Material 3 Expressive. Assume the network is unavailable.",
+      "expected_output": "Inspect and reuse existing primitives, preserve validation and focus, map tokens and responsive form layout, honor reduced motion, and label unverified Expressive specs. Do not fabricate current APIs or require a stack replacement.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Review this screenshot for M3 accessibility compliance. It has purple buttons, rounded cards, and a modal. Can you certify that it is accessible?",
+      "expected_output": "Decline certification from appearance alone, distinguish observable visual findings from unverified focus, semantics and screen-reader behavior, and offer concrete verification steps without editing anything.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Use @material/web for every component in a new M3 Expressive app, including a navigation rail and date picker. What imports do I need?",
+      "expected_output": "Verify current README, roadmap and exports, disclose maintenance and coverage limits, and propose compatible primitives rather than inventing imports.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Fix a Go payment parser without changing the UI.",
+      "expected_output": "Do not trigger the M3 skill or introduce UI work.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Our Angular Material app already has an M3 theme. Migrate only the account settings page toward current M3 Expressive guidance, keeping its routes and behavior.",
+      "expected_output": "Inspect installed Angular Material APIs and existing theme conventions, preserve routing, form validation and focus behavior, verify Expressive support, and make targeted changes without replacing the stack or unrelated screens.",
+      "files": []
+    }
+  ]
+}

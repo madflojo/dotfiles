@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Tribunal"
+  short_description: "Independent engineering reviews with risk-based personas"
+  default_prompt: "Use $engineering-tribunal to select independent reviewers, assess this decision or artifact, and synthesize findings with consumer-feedback checkpoints."
