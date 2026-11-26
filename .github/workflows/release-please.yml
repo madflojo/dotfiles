@@ -1,0 +1,43 @@
+name: Skill releases
+
+# Activate in a separate PR after import merges and publication is authorized.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  boundary:
+    name: Verify release activation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reject unconfigured or disabled release automation
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync } from 'node:fs';
+          import assert from 'node:assert/strict';
+          import { execFileSync } from 'node:child_process';
+          const config = JSON.parse(readFileSync('release-please-config.json'));
+          const sha = config['bootstrap-sha'];
+          assert(/^[a-f0-9]{40}$/.test(sha) && !/^0+$/.test(sha), 'Set the merged import SHA before activation');
+          assert.equal(config['skip-github-release'], false, 'Publication remains disabled until authorized');
+          execFileSync('git', ['merge-base', '--is-ancestor', sha, 'HEAD']);
+          JS
+  release:
+    name: Release Please
+    needs: boundary
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: googleapis/release-please-action@8b8fd2cc23b2e18957157a9d923d75aa0c6f6ad5 # v4
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json

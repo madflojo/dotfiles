@@ -16,24 +16,41 @@
 | `AGENTS.md` | Instruction entry point, TOC, and task-based loading | [Reference](AGENTS.md) |
 | `AGENTS-*.md` | Working style, workflow, validation, review, and architecture guidance | [Loading rules](AGENTS.md#loading-and-routing) |
 | `scheduled-prompts/` | Saved prompts for scheduled use across agent harnesses | [Session Nudge supervisor](scheduled-prompts/session-nudge.md) |
-| `skills/` | Bundled engineering review and Material 3 web design skills | [Bundled agent skills](#bundled-agent-skills) |
+| `skills/` | Independently installable agent skills | [Bundled agent skills](#bundled-agent-skills) |
 
 ## Agent guidance installation
 
-Copy the shared guidance as a complete set into the user's home directory. First inspect and back up existing destination files. If a destination is a symlink, remove only the link before copying; plain `cp` follows destination symlinks and does not migrate them to regular files. Apply the same precaution to separate agent entrypoints. Preserve `AGENTS-local.md` separately. From this repository, after preparing the destinations:
+Copy the shared guidance as a complete set into the user's home directory. First
+inspect and back up existing destination files. If a destination is a symlink,
+remove only the link before copying; plain `cp` follows destination symlinks and
+does not migrate them to regular files. Apply the same precaution to separate
+agent entrypoints. Preserve `AGENTS-local.md` separately. From this repository,
+after preparing the destinations:
 
 ```sh
-cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md AGENTS-validation.md AGENTS-review.md AGENTS-architecture.md "$HOME/"
+cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md AGENTS-validation.md \
+  AGENTS-review.md AGENTS-architecture.md "$HOME/"
 ```
 
-Review existing destination files before copying; the command replaces files with matching names. Repeat the copy when updating the shared policy so the entrypoint and companions stay consistent. Configure each agent to load `$HOME/AGENTS.md`; if it requires a separate entrypoint location, copy `AGENTS.md` there too. All companion paths still resolve from `$HOME`, without symlink discovery.
+Review existing destination files before copying; the command replaces files
+with matching names. Repeat the copy when updating the shared policy so the
+entrypoint and companions stay consistent. Configure each agent to load
+`$HOME/AGENTS.md`; if it requires a separate entrypoint location, copy
+`AGENTS.md` there too. All companion paths still resolve from `$HOME`, without
+symlink discovery.
 
-Create `$HOME/AGENTS-local.md` separately for machine-specific additions. Installation must preserve it. Keep any repository-local source copy untracked and locally ignored; do not include it in the shared copy command.
+Create `$HOME/AGENTS-local.md` separately for machine-specific additions.
+Installation must preserve it. Keep any repository-local source copy untracked
+and locally ignored; do not include it in the shared copy command.
 
 ## Bundled agent skills
 
 | Skill | Purpose |
 | --- | --- |
+| [fun-commit-msg](skills/fun-commit-msg/SKILL.md) | Safe Conventional Commits with a little personality |
+| [fun-pull-requests](skills/fun-pull-requests/SKILL.md) | Prepare and publish reviewable GitHub PRs |
+| [learn-this-project](skills/learn-this-project/SKILL.md) | Evidence-backed repository discovery |
+| [review-this](skills/review-this/SKILL.md) | Structured code and documentation reviews |
 | [engineering-tribunal](skills/engineering-tribunal/SKILL.md) | Independent engineering reviews with risk-based personas, RACI selection, and consumer-feedback checkpoints |
 | [m3](skills/m3/SKILL.md) | Design, implement, migrate, and review Material 3 web interfaces |
 
@@ -48,17 +65,14 @@ cp -R skills/engineering-tribunal "$HOME/.codex/skills/"
 cp -R skills/m3 "$HOME/.codex/skills/"
 ```
 
-## Standalone Agent Skills
+## Selective installation and releases
 
-Each skill repository has its own installation instructions.
+Each skill is independent of the editor configuration and personal agent
+policy. See [skill installation and releases](docs/skills.md) for selective
+installation, pinning, original source revisions, and the release cutover.
 
-| Workflow | Repository |
-| --- | --- |
-| Write Conventional Commit messages and commit staged changes | [fun-commit-msg](https://github.com/madflojo/fun-commit-msg) |
-| Draft and open GitHub pull requests | [fun-pull-requests](https://github.com/madflojo/fun-pull-requests) |
-| Get oriented in a codebase | [learn-this-project](https://github.com/madflojo/learn-this-project) |
-| Review code and documentation | [review-this](https://github.com/madflojo/review-this) |
-| Write and review Go code, including Godoc comments | [go-style-agent-skill](https://github.com/madflojo/go-style-agent-skill) |
+[Go style](https://github.com/madflojo/go-style-agent-skill) remains maintained
+in its standalone repository.
 
 ---
 
@@ -74,7 +88,9 @@ Each skill repository has its own installation instructions.
 
 ## 🤝 Contributing
 
-PRs welcome! Please open an issue to discuss ideas or improvements first.
+Use a short-lived branch and a focused pull request. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for checks, squash titles, dependency
+updates, and the release process.
 
 ---
 
