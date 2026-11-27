@@ -45,10 +45,28 @@ If a service fails, mark it red and label it Failed. If a database is unhealthy,
 use amber or yellow and label the state. Preserve role identity through the
 base treatment, shape, or label when state cues change its appearance.
 
-Show an occasional retry with a dashed, slightly faded path labeled with its
-condition, such as Retry on timeout. Explain the line convention. A dashed path
-must not ambiguously mean retry, inactive, and asynchronous in the same figure.
-Retain readable contrast and non-color cues in all these treatments.
+Use a solid arrow for the main illustrated request or response that completes. A
+response that arrives after the client deadline is still solid if it arrives;
+the deadline alone does not prove that the connection failed. Background work
+that completes in the scenario also stays solid.
+
+Show an alternate route with a dashed arrow and label its condition. It may be
+selected while every system is healthy, not only during failover. An occasional
+retry can use this treatment with its actual condition, such as Retry on timeout.
+Keep the route's role color: a teal alternate route can remain teal. Tune opacity
+to make a rarely used path less prominent without losing readable contrast or
+arrowheads. No fixed grey or opacity value is required.
+
+Use a faded dotted stroke for a failed or interrupted connection. Keep this
+distinct from a valid alternate route. Show actual solid, dashed, and dotted
+arrow samples beside their meanings in the legend, rather than a prose-only key.
+
+A paused worker or read-only database can have a dashed system box, with its
+state labeled. A failed instance uses a dotted red box and a failure label. A
+healthy backend that receives none of this client's traffic keeps its normal
+active outline. Mere lack of traffic does not establish an inactive system.
+Region or other grouping boundaries must remain distinguishable from these
+system-state borders. Retain non-color cues throughout.
 
 ## Comparison and repeated work
 
