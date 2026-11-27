@@ -1,100 +1,81 @@
 # dotfiles 🧰
 
-**Terminal and editor configs, shared agent guidance, and scheduled prompts.**
+Terminal and editor settings, shared agent instructions, and reusable skills.
+Install individual skills or use the shared agent guidance below.
 
 [![License](https://img.shields.io/github/license/madflojo/dotfiles)](LICENSE)
 
----
+## Bundled agent skills
 
-## 🧱 Structure
+| Skill | What it does |
+| --- | --- |
+| [fun-commit-msg](skills/fun-commit-msg/SKILL.md) | Write Conventional Commits and commit reviewed changes, with a little personality |
+| [fun-pull-requests](skills/fun-pull-requests/SKILL.md) | Prepare and open pull requests with clear descriptions and verified results |
+| [learn-this-project](skills/learn-this-project/SKILL.md) | Explore a repository and explain how it works, with evidence |
+| [review-this](skills/review-this/SKILL.md) | Review code and documentation for concrete issues |
+| [engineering-tribunal](skills/engineering-tribunal/SKILL.md) | Bring independent reviewers to consequential engineering decisions |
+| [diagram-quality](skills/diagram-quality/SKILL.md) | Make diagrams easier to follow while keeping them technically accurate |
+| [material-design-m3](skills/material-design-m3/SKILL.md) | Build and review web interfaces using Material 3 |
 
-| Module/Path | Description | Docs |
-| --- | --- | --- |
-| `.vimrc` | Vim defaults, plugins, and editor preferences | [Reference](.vimrc) |
-| `.tmux.conf` | tmux status line and key bindings | [Reference](.tmux.conf) |
-| `.carbon-now.json` | Preset for carbon.now.sh exports | [Reference](.carbon-now.json) |
-| `AGENTS.md` | Instruction entry point, TOC, and task-based loading | [Reference](AGENTS.md) |
-| `AGENTS-*.md` | Working style, workflow, validation, review, and architecture guidance | [Loading rules](AGENTS.md#loading-and-routing) |
-| `scheduled-prompts/` | Saved prompts for scheduled use across agent harnesses | [Session Nudge supervisor](scheduled-prompts/session-nudge.md) |
-| `skills/` | Independently installable agent skills | [Bundled agent skills](#bundled-agent-skills) |
+Install `diagram-quality` for your user account with Skills CLI:
+
+```sh
+npx skills@1.9.0 install https://github.com/madflojo/dotfiles \
+  --skill diagram-quality --global
+```
+
+Replace `diagram-quality` with any skill in the table, or omit the
+`--skill diagram-quality` option to browse the available skills.
+Leave off `--global` to install in the current project instead.
+
+See [skill installation and releases](docs/skills.md) for local installs,
+version pinning, and release details.
+[Go style](https://github.com/madflojo/go-style-agent-skill) lives in its own
+repository.
 
 ## Agent guidance installation
 
-Copy the shared guidance as a complete set into the user's home directory. First
-inspect and back up existing destination files. If a destination is a symlink,
-remove only the link before copying; plain `cp` follows destination symlinks and
-does not migrate them to regular files. Apply the same precaution to separate
-agent entrypoints. Preserve `AGENTS-local.md` separately. From this repository,
-after preparing the destinations:
+The shared guidance covers context loading, planning, validation, and review.
+Install it separately from the skills.
 
-```sh
-cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md AGENTS-validation.md \
-  AGENTS-review.md AGENTS-architecture.md "$HOME/"
-```
+1. Inspect and back up existing destination files. If a destination is a
+   symlink, remove only the link before copying; `cp` follows destination
+   symlinks and would overwrite the linked file. Apply this precaution to any
+   separate agent entrypoint too. Preserve your existing `AGENTS-local.md`.
+2. From this repository, copy the complete shared set into your home directory:
 
-Review existing destination files before copying; the command replaces files
-with matching names. Repeat the copy when updating the shared policy so the
-entrypoint and companions stay consistent. Configure each agent to load
-`$HOME/AGENTS.md`; if it requires a separate entrypoint location, copy
-`AGENTS.md` there too. All companion paths still resolve from `$HOME`, without
-symlink discovery.
+   ```sh
+   cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md \
+     AGENTS-validation.md AGENTS-review.md AGENTS-architecture.md "$HOME/"
+   ```
 
-Create `$HOME/AGENTS-local.md` separately for machine-specific additions.
-Installation must preserve it. Keep any repository-local source copy untracked
-and locally ignored; do not include it in the shared copy command.
+   This replaces files with matching names. Repeat the complete copy when
+   updating shared guidance so the entrypoint and companion files stay in sync.
+3. Configure your agent to load `$HOME/AGENTS.md`. If it requires an entrypoint
+   in another location, copy `AGENTS.md` there too. Companion files still load
+   from `$HOME`, regardless of where the entrypoint lives.
+4. Use `$HOME/AGENTS-local.md` for machine-specific additions. Keep it separate
+   from shared updates. If you keep a local copy in this repository, leave it
+   untracked and locally ignored.
 
-## Bundled agent skills
+## What's here
 
-| Skill | Purpose |
+| File or directory | Purpose |
 | --- | --- |
-| [fun-commit-msg](skills/fun-commit-msg/SKILL.md) | Safe Conventional Commits with a little personality |
-| [fun-pull-requests](skills/fun-pull-requests/SKILL.md) | Prepare and publish reviewable GitHub PRs |
-| [learn-this-project](skills/learn-this-project/SKILL.md) | Evidence-backed repository discovery |
-| [review-this](skills/review-this/SKILL.md) | Structured code and documentation reviews |
-| [engineering-tribunal](skills/engineering-tribunal/SKILL.md) | Independent engineering reviews with risk-based personas, RACI selection, and consumer-feedback checkpoints |
-| [diagram-quality](skills/diagram-quality/SKILL.md) | Clear, technically accurate diagrams across tools and formats |
-| [material-design-m3](skills/material-design-m3/SKILL.md) | Design, implement, migrate, and review Material 3 web interfaces |
+| [.vimrc](.vimrc) | Vim settings, plugins, and editor preferences |
+| [.tmux.conf](.tmux.conf) | tmux status line and key bindings |
+| [.carbon-now.json](.carbon-now.json) | Preset for carbon.now.sh exports |
+| [AGENTS.md](AGENTS.md) | Agent instruction entrypoint and loading rules |
+| `AGENTS-*.md` | Working style, delivery, checks, reviews, and architecture |
+| [scheduled-prompts/](scheduled-prompts/session-nudge.md) | Saved prompts for scheduled agent work |
+| [skills/](#bundled-agent-skills) | Independently installable agent skills |
 
-Copy a selected skill directory into your agent's skill directory. For Codex,
-use `~/.codex/skills/`. Inspect and back up any existing destination first;
-replace the complete skill directory when updating so references stay together.
-For a new installation from this repository:
+## Contributing
 
-```sh
-mkdir -p "$HOME/.codex/skills"
-cp -R skills/engineering-tribunal "$HOME/.codex/skills/"
-cp -R skills/material-design-m3 "$HOME/.codex/skills/"
-```
+Use a short-lived branch and keep each pull request focused. See
+[CONTRIBUTING.md](CONTRIBUTING.md) for checks, squash titles, dependency updates,
+and the release process.
 
-## Selective installation and releases
+## License
 
-Each skill is independent of the editor configuration and personal agent
-policy. See [skill installation and releases](docs/skills.md) for selective
-installation, pinning, original source revisions, and the release cutover.
-
-[Go style](https://github.com/madflojo/go-style-agent-skill) remains maintained
-in its standalone repository.
-
----
-
-## 📦 Tech & Integrations (optional)
-
-- Editor: Vim
-- Terminal: tmux
-- Automation: Make
-- CLI utilities: GitHub CLI (`gh`), `act`
-- Containerization: Docker
-
----
-
-## 🤝 Contributing
-
-Use a short-lived branch and a focused pull request. See
-[CONTRIBUTING.md](CONTRIBUTING.md) for checks, squash titles, dependency
-updates, and the release process.
-
----
-
-## 📄 License
-
-Apache-2.0 — see [LICENSE](LICENSE).
+Apache-2.0. See [LICENSE](LICENSE).
