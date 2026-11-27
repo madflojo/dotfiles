@@ -17,7 +17,7 @@ make lint tests
 `make tests` checks package structure, YAML/JSON and release schemas, exercises
 the actual Release Please package against offline fixtures, and installs each
 bundled skill with GitHub CLI and Skills CLI into temporary destinations.
-It covers all six skills and does not update installed user skills or publish
+It covers all seven skills and does not update installed user skills or publish
 anything. The shared Apache-2.0 license is at the repository root.
 
 Markdown lint checks all new and changed files. The exact original Markdown
@@ -36,7 +36,7 @@ or `feat(review-this): expand boundary review`. Changed package paths select
 releases; a title's scope does not select packages by itself. Keep unrelated
 skill changes in separate PRs. `feat` requests a minor release and `fix` a
 patch; `!` or a `BREAKING CHANGE:` footer requests a major release for stable
-skills. The two development skills stay within `0.x`, as described in the
+skills. The three development skills stay within `0.x`, as described in the
 [development version policy](docs/skills.md#independent-releases). Internal
 `chore`, `ci`, and `test` changes normally do not request a release.
 

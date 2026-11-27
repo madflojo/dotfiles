@@ -1,0 +1,4 @@
+interface:
+  display_name: "Diagram Quality"
+  short_description: "Clear, accurate diagrams across tools and formats"
+  default_prompt: "Use $diagram-quality to create, improve, or review this diagram for visual clarity and technical accuracy."

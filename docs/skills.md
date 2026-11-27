@@ -29,7 +29,7 @@ npx skills@1.9.0 add . --skill fun-commit-msg --agent codex --copy --yes
 Run it in the intended target project with an absolute checkout path in place
 of `.` when the target project differs from this repository. Repeat with
 `fun-pull-requests`, `learn-this-project`, `review-this`,
-`engineering-tribunal`, or `material-design-m3` as needed.
+`engineering-tribunal`, `material-design-m3`, or `diagram-quality` as needed.
 
 The former `m3` skill is now named `material-design-m3`. Before updating an
 existing installation, inspect and back up the old `m3` directory, then remove
@@ -65,7 +65,7 @@ Go style remains maintained in
 
 ## Independent releases
 
-All six bundled skills participate in the Release Please manifest.
+All seven bundled skills participate in the Release Please manifest.
 Each has its own version, `CHANGELOG.md`, `version.txt`, release PR, and tag
 `<skill>-v<version>`. There is no root release package or shared version.
 Editor/configuration changes cannot select all skills for release.
@@ -76,11 +76,11 @@ dotfiles tags. Historical changelog links still point to their original repos.
 Skill frontmatter versions, where present, are informational and unchanged;
 the manifest, package version file, and component release tag are authoritative.
 
-`engineering-tribunal` and `material-design-m3` start from an unreleased
-development baseline of `0.1.0`, not an invented published release. Their
+`engineering-tribunal`, `material-design-m3`, and `diagram-quality` start from an
+unreleased development baseline of `0.1.0`, not an invented published release. Their
 changelogs identify this as unreleased. While they are being refined, fixes
 bump the patch version and features or breaking changes bump the minor
-version within `0.x`. Promoting either skill to `1.0.0` requires a deliberate
+version within `0.x`. Promoting any of these skills to `1.0.0` requires a deliberate
 release-policy change. Their versions do not follow the four imported skills.
 
 Release automation is staged and disabled in this import. Its manual workflow
@@ -102,7 +102,7 @@ After import merges, prepare a separate activation PR:
    by this setup. Workflow permissions/settings may still need owner action
    if GitHub rejects PR creation. Do not weaken checks to bypass this.
 
-Retain the bootstrap boundary until all six skills have actual dotfiles
+Retain the bootstrap boundary until all seven skills have actual dotfiles
 release boundaries. Removing it after only one package releases can cause
 other packages to scan imported history. Fixture tests cover the partial
 release case. Release Please retries use deterministic release PR branches;

@@ -1,0 +1,68 @@
+{
+  "skill_name": "diagram-quality",
+  "evals": [
+    {
+      "id": 1,
+      "name": "request-path",
+      "prompt": "Design a tool-independent diagram for Browser calling Orders through a load balancer. Orders uses a database and has a telemetry sidecar. A metrics collector receives background telemetry. Give a layout specification, not code.",
+      "expected_output": "Focus on the initiating request path; separate telemetry; embed the sidecar without implying the collector lives in the service; distinguish request direction from connections; consistent role colors and legend.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "crossings",
+      "prompt": "Review a proposed diagram showing tangled cross-region service calls. The crossings are intentional to show coupling. A direct diagonal also makes the layout cleaner. Should every crossing and diagonal be removed?",
+      "expected_output": "Allow informative or cleaner crossings while keeping endpoints traceable and junctions unambiguous; no orthogonal-only rule; avoid needless tangled streams.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "label-placement",
+      "prompt": "Fix a diagram where a boundary cuts through a subtitle and opaque arrow labels hide the middle of each arrow. Describe the changes.",
+      "expected_output": "Put each label fully inside or clearly outside its element; place arrow labels slightly above/below/beside the path, preferably near the source; keep the arrow visible rather than masking it.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "roles-and-states",
+      "prompt": "Specify a legend for infrastructure, load balancers/databases, and services. One service failed, one database is unhealthy, and a retry happens sometimes.",
+      "expected_output": "Consistent role palette and legend; red failed, amber/yellow unhealthy with explicit labels; preserve role identity; occasional retry dashed and slightly faded but readable; explain condition and avoid color-only meaning.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "concurrency-and-loops",
+      "prompt": "Simplify a comparison of a new connection per request versus connection reuse. Show TCP and TLS setup, requests, responses, closure, and concurrent requests. Do not check protocol details; identify assumptions.",
+      "expected_output": "Keep distinct phases and directions, accurate repeat scopes and one-time setup, preserve concurrency, stable comparison; flag unspecified protocol version/closure assumptions; do not invent serialization or delete meaningful steps.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "presentation",
+      "prompt": "A system diagram has twenty necessary components. It looks readable when zoomed to 200%, but will be projected on a conference slide. Improve its readability without changing its meaning.",
+      "expected_output": "Use overview/detail or a sequence of consistent views; retain necessary semantics; inspect actual presentation size; no arbitrary node cap or claim zoom fixes a projected slide.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "review-only",
+      "prompt": "Review a screenshot for diagram quality. It has a green database and blue services. The arrows and small labels are not discernible. Can you approve it? Do not change files.",
+      "expected_output": "Report supported findings; do not approve unreadable labels or infer hidden arrows/semantics; request inspectable output or name limits; keep review-only scope.",
+      "files": []
+    },
+    {
+      "id": 8,
+      "name": "non-trigger",
+      "prompt": "Fix a parser that mishandles an empty string. Do not change documentation, diagrams, or UI.",
+      "expected_output": "Do not apply diagram work or expand the requested scope.",
+      "files": []
+    },
+    {
+      "id": 9,
+      "name": "state-transitions",
+      "prompt": "Design a state diagram for Pending, Completed, and TimedOut. A response transitions Pending to Completed; a deadline transitions Pending to TimedOut. Once either transition wins, later events leave state unchanged. Give a layout specification without code.",
+      "expected_output": "Arrows mean guarded state transitions, not requests or network connections; preserve mutually exclusive terminal outcomes and no-op late events; keep concurrency/winner semantics explicit rather than relying on placement; use consistent state cues and legend if colors encode meaning; do not invent a shared lock implementation.",
+      "files": []
+    }
+  ]
+}
