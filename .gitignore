@@ -1,0 +1,3 @@
+# Architecture decisions are local to this checkout.
+/docs/adr/
+node_modules/

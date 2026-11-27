@@ -1,0 +1,63 @@
+{
+  "fun-commit-msg": {
+    "repository": "https://github.com/madflojo/fun-commit-msg",
+    "revision": "aab2a16544b9d3d230f34ee1043b58f474756887",
+    "version": "1.1.0",
+    "files": {
+      "SKILL.md": "f4988d402388d30417a759eda6bd2389e12227ab286643dbecc6b980d6411e54",
+      "references/MESSAGES.md": "f0e92c88d5b4b42fc483b020e0506c8aa6f469dc4c3b3ca0de718f6a7a23c8b1",
+      "CHANGELOG.md": "d6c0e0c2e51a82ffda1a9d37f453e60260344e2a8cbef4ff79df64398acc54ec"
+    },
+    "sourceLicense": {
+      "path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  },
+  "fun-pull-requests": {
+    "repository": "https://github.com/madflojo/fun-pull-requests",
+    "revision": "4680cd55c751d58ff23fb873969b628f0c8f4a8a",
+    "version": "1.1.0",
+    "files": {
+      "SKILL.md": "71d091c25be0ac117322c80b1c02c4991c8d3db301399ae39001efabb66480a1",
+      "CHANGELOG.md": "20e5777a8cd09d88c0b40e83621665097bf360fd92800ecfba78c032b30b7b42"
+    },
+    "sourceLicense": {
+      "path": "LICENSE",
+      "sha256": "17d1239fb79e41fdb266b401e6c6f0ef169d6e6dc872e933d24a3499251d56c0"
+    }
+  },
+  "learn-this-project": {
+    "repository": "https://github.com/madflojo/learn-this-project",
+    "revision": "b70684e0959baed6927e481428b77eae00e035c1",
+    "version": "1.0.1",
+    "files": {
+      "SKILL.md": "8b3f2502c53c4a667903c84d92b6a49f42ee56f4d66291bfd86e9125132f653d",
+      "assets/report-template.md": "a2d249a2440662c412c4bb65f87bdca8ba119e5310580ee6fcf4f52d24ea15cf",
+      "references/EVIDENCE.md": "448e2bf15ecf6fbc8b7f00d426346b2c271ca75c20a0c7ddcbfea17c159d25ed",
+      "references/OUTPUT.md": "caf231df6b8a19d97b62225d15eea4af7b518c8e1cd9a21e05b534053847fde4",
+      "references/WORKFLOW.md": "353fbc4fa64679c63b84ee6e279118a455c437c7447eb16c5f7fcc4504291c8d",
+      "CHANGELOG.md": "2a67c60cfb580dae76634cc3e5bc7c5ad2e38afc30d51611c6f5165091d15987"
+    },
+    "sourceLicense": {
+      "path": "LICENSE",
+      "sha256": "ec1fbd0e32653cc33c88ff6aecbbbbd4d4943e06f0db5158c717f8cc221339b6"
+    }
+  },
+  "review-this": {
+    "repository": "https://github.com/madflojo/review-this",
+    "revision": "453835d518a7ceb66407d05284a8b24026edc0c8",
+    "version": "1.0.1",
+    "files": {
+      "SKILL.md": "575fac45c79ca8546183131426719d5c786005883d940ba9aa23cd1051b29ad3",
+      "assets/review-template.md": "39186e9287062abc0a80bd01be0e21ae1dfcda8f12a0609127896c6abc88c2c2",
+      "references/CODE-CRITERIA.md": "434ad0d6957ccc96721193bdefc3b907d8acf7edebf7940b7afeea5bc4f9ae2a",
+      "references/DOCS-CRITERIA.md": "dfc626c28709c37eb5b1bacba81dab37c45b05394c089b09ae7ffd7128b5d8c6",
+      "references/OUTPUT.md": "dafc84eb145281fad450a1aefcbf2008a32a8db2c7ea4d401e12b8cd61564deb",
+      "CHANGELOG.md": "673df92ea0a8f3843b87fad6c1518db78f969b400f6c677a3b26fa23ddff9fcb"
+    },
+    "sourceLicense": {
+      "path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  }
+}

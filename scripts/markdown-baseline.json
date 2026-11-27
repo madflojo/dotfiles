@@ -1,0 +1,24 @@
+{
+  "revision": "8aa1e6e39940624a1b57dcbdffec26e22a403361",
+  "unchangedFiles": {
+    "AGENTS-architecture.md": "0606935fd9f0e551c809a93d78f577fcd91c82b6a4f4c0f8e085d5db58fc3810",
+    "AGENTS-review.md": "da68b5617963a1c302c436306e65e4e851aaef131ac6e15462bbe15467e1c1c6",
+    "AGENTS-validation.md": "af44f5f9329064bf907383cd09961a39d4de9673d4120f1da859bffda8295f0c",
+    "AGENTS-workflow.md": "83ad279c227c4b0ebaafb1ac9182825b85e0e3d3a7d4566c1b3e5229111fd0c7",
+    "AGENTS-working-style.md": "64227dcb0afb754c4ef9bacc876583c0f128487f41239eaafbc461a3aa309b10",
+    "AGENTS.md": "a234b4dbf373a2785bca2816de42483f4a7cfe3764d9110d4418b14254ea41b1",
+    "scheduled-prompts/session-nudge.md": "7ce0cda15763244a5844e94e53f3556e49cb04cab99df07cd4046749fca89659",
+    "skills/engineering-tribunal/SKILL.md": "4348ed35a932f3178654ee8c3bae19d068bd4188c111a719ba300b27a6ba1420",
+    "skills/engineering-tribunal/assets/assessment.md": "ba168eb6dfb2511c1325cfe14869d7fb6c3f6c1b61cfd53078c1b3d9482563a6",
+    "skills/engineering-tribunal/assets/review-packet.md": "c6296de6ef5b59f1b562330ce6f3dd9442aa23a0c40f88f8c24a7d26730838fc",
+    "skills/engineering-tribunal/assets/synthesis.md": "df4433b1745ea673673202d3ccebd17ab2c081bb19d190b9b79d4927cca3ea4f",
+    "skills/engineering-tribunal/references/perspectives.md": "8bc6609e1221b5f101230d38a875cd773ca2510b60bc5ceb476f4d94370f3b49",
+    "skills/engineering-tribunal/references/reviewer-contract.md": "58ea44db1dd0bdef2583ecb0352c8211c09ea6bbd84d6a627ae8c802d95b7a67",
+    "skills/engineering-tribunal/references/selection.md": "40cde63f3cf7298ab46997fc1900a1deb81e83f7fe467d9004309b8350244848",
+    "skills/material-design-m3/SKILL.md": "faf8f378b7b258d105c698e963630acc0e090b97ef49d941e7d82fae8db732af",
+    "skills/material-design-m3/references/components.md": "aa97bb379bd495b249693a176ee96a436cd9ded03fe93b9d17d6d9599712d68c",
+    "skills/material-design-m3/references/foundations.md": "81bbb74ba5ee5059c7ab548cd9d34e1b979e50c4e7db61de9126b5b42d7c3aff",
+    "skills/material-design-m3/references/sources.md": "e4f4b7677f18bb214f2a54886bfa8277d4c7b9fc859fe4bed0f1a5fe968999f1",
+    "skills/material-design-m3/references/web.md": "8ca35afa5533bd524646ca7da770aaffcc6da11185d69f164f13481cf24e8ee9"
+  }
+}

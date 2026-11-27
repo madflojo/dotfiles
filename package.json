@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "js-yaml": "4.3.2",
+    "markdownlint-cli2": "0.24.2",
+    "release-please": "17.11.2",
+    "skills": "1.9.0"
+  },
+  "name": "dotfiles-skill-tooling",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "lint:markdown": "node scripts/lint-markdown.mjs",
+    "lint:links": "node scripts/check-links.mjs",
+    "check": "node scripts/check-packages.mjs",
+    "test": "node --test scripts/release.test.mjs",
+    "test:install": "node scripts/check-installs.mjs",
+    "lint": "npm run lint:markdown && npm run lint:links"
+  }
+}
