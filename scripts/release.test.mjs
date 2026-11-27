@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import yaml from 'js-yaml';
 import { Manifest } from 'release-please';
 
 const config = JSON.parse(readFileSync('release-please-config.json'));
@@ -11,6 +15,38 @@ const [first, second] = names;
 const commit = (sha, message, files) => ({ sha, message, files });
 const importCommit = commit(boundary, 'feat: historic import', names.map(p => `${p}/SKILL.md`));
 const quiet = Object.fromEntries(['info', 'warn', 'debug', 'error', 'trace'].map(key => [key, () => {}]));
+
+test('release workflow opens PRs on main pushes without publishing releases', () => {
+  const workflow = yaml.load(readFileSync('.github/workflows/release-please.yml', 'utf8'));
+  assert.deepEqual(workflow.on.push?.branches, ['main']);
+  assert('workflow_dispatch' in workflow.on);
+  assert.equal(workflow.jobs.release.needs, 'boundary');
+  const release = workflow.jobs.release.steps.find(step => step.uses?.startsWith('googleapis/release-please-action@'));
+  assert.equal(release.with['skip-github-release'], true);
+  assert.equal(release.with['skip-github-pull-request'] ?? false, false);
+  assert.equal(config['bootstrap-sha'], '303626387d238095d18317844469300d77609d5d');
+});
+
+test('release boundary accepts PR-only mode and rejects invalid ancestry', () => {
+  const workflow = yaml.load(readFileSync('.github/workflows/release-please.yml', 'utf8'));
+  const guard = workflow.jobs.boundary.steps.find(step => step.run).run;
+  const directory = mkdtempSync(path.join(tmpdir(), 'release-boundary-'));
+  try {
+    execFileSync('git', ['init', '--quiet', directory]);
+    execFileSync('git', ['-c', 'commit.gpgsign=false', '-c', 'user.name=Release Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '--allow-empty', '--quiet', '-m', 'fixture import'], { cwd: directory });
+    const sha = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: directory, encoding: 'utf8' }).trim();
+    const run = bootstrap => {
+      writeFileSync(path.join(directory, 'release-please-config.json'), JSON.stringify({ ...config, 'bootstrap-sha': bootstrap, 'skip-github-release': true }));
+      return spawnSync('bash', ['-c', guard], { cwd: directory, encoding: 'utf8' });
+    };
+    const valid = run(sha);
+    assert.equal(valid.status, 0, valid.stderr);
+    assert.notEqual(run('0'.repeat(40)).status, 0);
+    assert.notEqual(run('f'.repeat(40)).status, 0);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
 
 async function candidates(commits, releases = [], manifestVersions = versions) {
   const fixtureConfig = { ...config, 'bootstrap-sha': boundary };

@@ -83,24 +83,24 @@ bump the patch version and features or breaking changes bump the minor
 version within `0.x`. Promoting any of these skills to `1.0.0` requires a deliberate
 release-policy change. Their versions do not follow the four imported skills.
 
-Release automation is staged and disabled in this import. Its manual workflow
-rejects the unresolved bootstrap SHA and disabled publication flag before any
-write job can run. Do not merge generated release PRs while publication is
-disabled: a merged but untagged release can block subsequent release creation.
+Release Please runs on pushes to `main` and supports manual dispatch. It
+creates or updates a release PR for each changed skill, with proposed versions
+and changelog entries. The bootstrap boundary is the merged import commit
+`303626387d238095d18317844469300d77609d5d`; later skill changes remain eligible.
+Unrelated repository changes do not select skill packages for release.
 
-After import merges, prepare a separate activation PR:
+Tag and GitHub Release publication remain disabled by the action's explicit
+`skip-github-release: true` input. Creating a reviewable release PR does not
+require enabling publication. Do not merge generated release PRs while
+publication is disabled: a merged but untagged release can block subsequent
+release creation. Once publication is authorized, a separate reviewed PR must
+enable it in both the workflow input and release configuration. Do not publish
+a real release as a test.
 
-1. Set `bootstrap-sha` to the exact merged import commit. Recheck any skill
-   changes made since import; they must remain eligible for release.
-2. Run release fixtures and safe dry runs. Require zero import-only releases,
-   independent package selection, and preservation of pending package history.
-3. Once publication is explicitly authorized, set `skip-github-release` to
-   `false` and add a `push` trigger restricted to `main`. Review the PR before
-   merge. Do not publish a real release as a test.
-4. Verify hosted bot-created PR checks. Current GitHub behavior can require
-   maintainer approval to start these runs; no new credentials are required
-   by this setup. Workflow permissions/settings may still need owner action
-   if GitHub rejects PR creation. Do not weaken checks to bypass this.
+Verify hosted bot-created PR checks before merging a release PR. GitHub can
+require maintainer approval to start these runs; no new credentials are
+required by this setup. Workflow permissions/settings may need owner action
+if GitHub rejects PR creation. Do not weaken checks to bypass this.
 
 Retain the bootstrap boundary until all seven skills have actual dotfiles
 release boundaries. Removing it after only one package releases can cause
