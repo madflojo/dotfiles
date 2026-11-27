@@ -26,7 +26,7 @@
       "id": 4,
       "name": "roles-and-states",
       "prompt": "Specify a legend for infrastructure, load balancers/databases, and services. One service failed, one database is unhealthy, and a retry happens sometimes.",
-      "expected_output": "Consistent role palette and legend; red failed, amber/yellow unhealthy with explicit labels; preserve role identity; occasional retry dashed and slightly faded but readable; explain condition and avoid color-only meaning.",
+      "expected_output": "Consistent role palette and legend with actual line samples; red failed, amber/yellow unhealthy with explicit labels; preserve role identity; occasional retry uses a dashed alternate path in a role color with opacity tuned for emphasis and readable contrast; explain condition and avoid color-only meaning.",
       "files": []
     },
     {
@@ -62,6 +62,27 @@
       "name": "state-transitions",
       "prompt": "Design a state diagram for Pending, Completed, and TimedOut. A response transitions Pending to Completed; a deadline transitions Pending to TimedOut. Once either transition wins, later events leave state unchanged. Give a layout specification without code.",
       "expected_output": "Arrows mean guarded state transitions, not requests or network connections; preserve mutually exclusive terminal outcomes and no-op late events; keep concurrency/winner semantics explicit rather than relying on placement; use consistent state cues and legend if colors encode meaning; do not invent a shared lock implementation.",
+      "files": []
+    },
+    {
+      "id": 10,
+      "name": "alternate-routes-and-opacity",
+      "prompt": "Specify line styles for a peach primary route and a teal alternate route that is used rarely but can be selected even when every component is healthy. Should the alternate route be grey or dotted? Give the legend entries too.",
+      "expected_output": "Solid illustrated main flow; dashed valid alternate route retaining teal rather than required grey; tune opacity for reduced emphasis without losing contrast or arrowheads; reserve dotted strokes for failed/interrupted connections; use actual line samples beside legend labels.",
+      "files": []
+    },
+    {
+      "id": 11,
+      "name": "late-response-and-broken-connection",
+      "prompt": "Review line styles for a response that arrives after the client deadline, a healthy background replication message that completes in this scenario, and a connection interrupted before delivery. Specify only what these facts establish.",
+      "expected_output": "Completed late response and completed background message remain solid; faded dotted line represents interrupted connection; lateness/background activity alone does not establish interruption, failure, or alternate routing; retain palette and explain distinctions without inventing remote failure.",
+      "files": []
+    },
+    {
+      "id": 12,
+      "name": "system-box-states",
+      "prompt": "Specify system-box outlines for a paused worker, a read-only database, a failed instance, and a healthy backend that gets none of this client's traffic. Group them by region without implying that the whole region is paused.",
+      "expected_output": "Labeled paused/read-only system boxes dashed; failed system dotted red with label; healthy bypassed backend normal active outline; logical region grouping distinguishable from system-state borders.",
       "files": []
     }
   ]

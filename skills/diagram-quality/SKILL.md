@@ -78,15 +78,28 @@ Do not require a renderer, font, palette, grid size, or fixed node count.
 - Map colors to roles consistently, for example infrastructure, platform
   enablers such as load balancers and databases, and services. Choose actual
   colors to suit the project; role colors need not be limited to two elements.
-- Include a legend for meaningful colors and explain non-obvious line styles
-  or symbols. Pair color with labels or other cues; color alone is insufficient.
+- Include a legend for meaningful colors and non-obvious line styles or symbols.
+  Show actual line or arrow samples beside their labels rather than describing
+  strokes only in words. Pair color with labels or other cues.
 - Show failed elements in red and unhealthy elements in amber or yellow, with
   explicit state labels. Reserve those state cues so role colors do not imply
   failure. Use an outline, badge, or similar treatment to retain role identity.
-- Show actions that happen sometimes with dashed, slightly faded paths. State
-  the condition, retain readable contrast, and explain the convention. Keep
-  occasional behavior distinguishable from inactive, bypassed, or failed paths.
-  Do not silently redefine established notation in an existing diagram.
+- Use solid arrows for the main flow that completes in the illustrated scenario,
+  including responses. A late response or background message is not inherently
+  a failed connection or an alternate route.
+- Use dashed arrows for alternate paths that can be taken when their condition
+  holds, including while systems are healthy. Keep the role or scheme color;
+  dashed does not require grey. Tune opacity to de-emphasize rarely used routes
+  while retaining readable contrast, labels, and arrowheads. Do not infer a
+  frequency from an alternate route alone.
+- Use dotted, faded strokes for failed or interrupted connections. Dashed and
+  dotted paths carry different meanings; do not interchange them for decoration.
+- Use dashed system boxes for explicitly paused or read-only systems, and dotted
+  red boxes for failed systems. Label the state. Active systems keep normal
+  boxes even when the illustrated traffic bypasses them. Distinguish logical
+  grouping boundaries from system-state borders.
+- Explain path conditions and line conventions. If existing notation conflicts,
+  reconcile it explicitly rather than silently redefining it.
 - Use icons when they improve recognition or explanation. Not every item needs
   one. Emojis add a playful, less serious tone; use them sparingly when suitable.
 - Make the main path prominent through placement, line weight, and restrained
