@@ -27,7 +27,6 @@ npx skills@1.9.0 add madflojo/dotfiles --skill diagram-quality --global
 
 Replace `diagram-quality` with any skill in the table, or omit the
 `--skill diagram-quality` option to browse the available skills.
-Add `--agent codex` to select Codex explicitly.
 Leave off `--global` to install in the current project instead.
 
 See [skill installation and releases](docs/skills.md) for local installs,
