@@ -52,6 +52,7 @@ and locally ignored; do not include it in the shared copy command.
 | [learn-this-project](skills/learn-this-project/SKILL.md) | Evidence-backed repository discovery |
 | [review-this](skills/review-this/SKILL.md) | Structured code and documentation reviews |
 | [engineering-tribunal](skills/engineering-tribunal/SKILL.md) | Independent engineering reviews with risk-based personas, RACI selection, and consumer-feedback checkpoints |
+| [diagram-quality](skills/diagram-quality/SKILL.md) | Clear, technically accurate diagrams across tools and formats |
 | [material-design-m3](skills/material-design-m3/SKILL.md) | Design, implement, migrate, and review Material 3 web interfaces |
 
 Copy a selected skill directory into your agent's skill directory. For Codex,

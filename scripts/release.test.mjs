@@ -86,7 +86,7 @@ test('a released package does not erase pending changes in unreleased packages',
   assert(prs[0].updates.every(update => update.path === '.release-please-manifest.json' || update.path.startsWith(`${second}/`)));
 });
 
-for (const name of ['engineering-tribunal', 'material-design-m3']) {
+for (const name of ['engineering-tribunal', 'material-design-m3', 'diagram-quality']) {
   test(`${name} releases independently and remains pre-major while being refined`, async () => {
     const directory = `skills/${name}`;
     for (const [message, expectedVersion] of [

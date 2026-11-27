@@ -53,6 +53,15 @@
       "changelog-path": "CHANGELOG.md",
       "version-file": "version.txt",
       "bump-minor-pre-major": true
+    },
+    "skills/diagram-quality": {
+      "release-type": "simple",
+      "component": "diagram-quality",
+      "include-component-in-tag": true,
+      "include-v-in-tag": true,
+      "changelog-path": "CHANGELOG.md",
+      "version-file": "version.txt",
+      "bump-minor-pre-major": true
     }
   }
 }
