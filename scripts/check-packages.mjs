@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import Ajv from 'ajv';
@@ -12,6 +12,8 @@ const json = file => JSON.parse(readFileSync(file, 'utf8'));
 const config = json('release-please-config.json');
 const versions = json('.release-please-manifest.json');
 const provenance = json('skills/provenance.json');
+const skills = readdirSync('skills', { withFileTypes: true })
+  .filter(directory => directory.isDirectory()).map(directory => directory.name);
 const ajv = new Ajv({ strict: false });
 addFormats(ajv);
 for (const [file, schema] of [
@@ -23,8 +25,9 @@ for (const [file, schema] of [
 }
 assert.deepEqual(Object.keys(config.packages).sort(), Object.keys(versions).sort());
 assert.deepEqual(Object.keys(config.packages).sort(),
-  Object.keys(provenance).map(name => `skills/${name}`).sort());
+  skills.map(name => `skills/${name}`).sort());
 assert.equal(config['separate-pull-requests'], true);
+readFileSync('LICENSE');
 for (const [directory, settings] of Object.entries(config.packages)) {
   const name = path.basename(directory);
   assert.equal(settings.component, name);
@@ -34,11 +37,12 @@ for (const [directory, settings] of Object.entries(config.packages)) {
   assert.equal(settings['changelog-path'], 'CHANGELOG.md');
   assert.equal(settings['version-file'], 'version.txt');
   assert.equal(readFileSync(`${directory}/version.txt`, 'utf8').trim(), versions[directory]);
-  for (const file of ['LICENSE', 'CHANGELOG.md', ...Object.keys(provenance[name].files)]) {
+  assert(!existsSync(`${directory}/LICENSE`), `${name}: use the shared root LICENSE`);
+  for (const file of ['CHANGELOG.md', ...Object.keys(provenance[name]?.files ?? {})]) {
     readFileSync(`${directory}/${file}`);
   }
 }
-for (const name of readdirSync('skills', { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)) {
+for (const name of skills) {
   const source = readFileSync(`skills/${name}/SKILL.md`, 'utf8');
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   assert(match, `${name}: missing frontmatter`);

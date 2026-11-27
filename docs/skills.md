@@ -28,8 +28,19 @@ npx skills@1.9.0 add . --skill fun-commit-msg --agent codex --copy --yes
 
 Run it in the intended target project with an absolute checkout path in place
 of `.` when the target project differs from this repository. Repeat with
-`fun-pull-requests`, `learn-this-project`, or `review-this` as needed.
-The existing `engineering-tribunal` and `m3` directories remain usable too.
+`fun-pull-requests`, `learn-this-project`, `review-this`,
+`engineering-tribunal`, or `material-design-m3` as needed.
+
+The former `m3` skill is now named `material-design-m3`. Before updating an
+existing installation, inspect and back up the old `m3` directory, then remove
+that selected directory and install `material-design-m3`. Avoid leaving both
+installed, which would expose the same instructions under two names. Pins to
+older repository revisions still provide the original `m3` name and path.
+
+All skills use this repository's single [Apache-2.0 license](../LICENSE).
+Selective skill installers copy the chosen skill directory; they do not copy
+the root license into it. Refer to the repository license when using or
+redistributing the skills.
 
 After the migration merges, install a remote skill pinned to the verified
 merged commit. Replace `MERGED_SHA` with that full commit SHA:
@@ -54,18 +65,23 @@ Go style remains maintained in
 
 ## Independent releases
 
-Only the four imported skills participate in the Release Please manifest.
+All six bundled skills participate in the Release Please manifest.
 Each has its own version, `CHANGELOG.md`, `version.txt`, release PR, and tag
 `<skill>-v<version>`. There is no root release package or shared version.
-Editor/configuration changes cannot select all skills for release. The
-existing `m3` and `engineering-tribunal` packages remain outside automation
-until they have a separately agreed version and changelog contract.
+Editor/configuration changes cannot select all skills for release.
 
 Initial versions are `1.1.0` for both fun skills and `1.0.1` for the discovery
 and review skills. These are verified original repository releases, not new
 dotfiles tags. Historical changelog links still point to their original repos.
 Skill frontmatter versions, where present, are informational and unchanged;
 the manifest, package version file, and component release tag are authoritative.
+
+`engineering-tribunal` and `material-design-m3` start from an unreleased
+development baseline of `0.1.0`, not an invented published release. Their
+changelogs identify this as unreleased. While they are being refined, fixes
+bump the patch version and features or breaking changes bump the minor
+version within `0.x`. Promoting either skill to `1.0.0` requires a deliberate
+release-policy change. Their versions do not follow the four imported skills.
 
 Release automation is staged and disabled in this import. Its manual workflow
 rejects the unresolved bootstrap SHA and disabled publication flag before any
@@ -86,7 +102,7 @@ After import merges, prepare a separate activation PR:
    by this setup. Workflow permissions/settings may still need owner action
    if GitHub rejects PR creation. Do not weaken checks to bypass this.
 
-Retain the bootstrap boundary until all four skills have actual dotfiles
+Retain the bootstrap boundary until all six skills have actual dotfiles
 release boundaries. Removing it after only one package releases can cause
 other packages to scan imported history. Fixture tests cover the partial
 release case. Release Please retries use deterministic release PR branches;
@@ -97,10 +113,12 @@ and latest checks before merging it.
 ## Migration and original sources
 
 [The provenance inventory](../skills/provenance.json) records each imported
-repository, exact commit, published version, and original file SHA-256 hashes.
+repository, exact commit, published version, original file SHA-256 hashes, and
+the original repository license hash.
 The hashes describe the import, not a restriction on future skill maintenance.
-Original skill files are unchanged. Each imported package includes its source
-license, changelog, and complete references/assets.
+Imported instructions are unchanged. Each imported package includes its source
+changelog and complete references/assets. Licensing is shared at the root;
+original license text remains accessible at the recorded source revision.
 
 Original repositories and historical tags/SHAs remain available. No history
 rewrite, mirrored maintenance, archive, or deletion is part of this migration.

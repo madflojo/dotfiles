@@ -35,6 +35,24 @@
       "include-v-in-tag": true,
       "changelog-path": "CHANGELOG.md",
       "version-file": "version.txt"
+    },
+    "skills/engineering-tribunal": {
+      "release-type": "simple",
+      "component": "engineering-tribunal",
+      "include-component-in-tag": true,
+      "include-v-in-tag": true,
+      "changelog-path": "CHANGELOG.md",
+      "version-file": "version.txt",
+      "bump-minor-pre-major": true
+    },
+    "skills/material-design-m3": {
+      "release-type": "simple",
+      "component": "material-design-m3",
+      "include-component-in-tag": true,
+      "include-v-in-tag": true,
+      "changelog-path": "CHANGELOG.md",
+      "version-file": "version.txt",
+      "bump-minor-pre-major": true
     }
   }
 }

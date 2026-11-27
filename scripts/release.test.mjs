@@ -85,3 +85,41 @@ test('a released package does not erase pending changes in unreleased packages',
   assert.equal(prs[0].version.toString(), '1.1.1');
   assert(prs[0].updates.every(update => update.path === '.release-please-manifest.json' || update.path.startsWith(`${second}/`)));
 });
+
+for (const name of ['engineering-tribunal', 'material-design-m3']) {
+  test(`${name} releases independently and remains pre-major while being refined`, async () => {
+    const directory = `skills/${name}`;
+    for (const [message, expectedVersion] of [
+      ['fix: clarify guidance', '0.1.1'],
+      ['feat: expand guidance', '0.2.0'],
+      ['feat!: revise the skill contract', '0.2.0'],
+    ]) {
+      const prs = await candidates([
+        commit('4'.repeat(40), message, [`${directory}/SKILL.md`]),
+      ]);
+      assert.equal(prs.length, 1);
+      assert.equal(prs[0].version.toString(), expectedVersion);
+      assert.deepEqual(prs[0].updates.map(update => update.path).sort(), [
+        '.release-please-manifest.json', `${directory}/CHANGELOG.md`, `${directory}/version.txt`,
+      ].sort());
+      const update = prs[0].updates.find(update => update.path.endsWith('CHANGELOG.md'));
+      const rendered = update.updater.updateContent(readFileSync(update.path, 'utf8'));
+      assert(rendered.includes(`${name}-v${expectedVersion}`));
+    }
+  });
+
+  test(`${name} keeps pending history when an imported package releases`, async () => {
+    const directory = `skills/${name}`;
+    const releaseSha = '3'.repeat(40);
+    const prs = await candidates([
+      commit(releaseSha, 'chore(main): release fun-commit-msg 1.1.1', [`${first}/version.txt`]),
+      commit('2'.repeat(40), 'fix: pending development guidance', [`${directory}/SKILL.md`]),
+      commit('1'.repeat(40), 'fix: already released', [`${first}/SKILL.md`]),
+    ], [{ tagName: 'fun-commit-msg-v1.1.1', name: 'fun-commit-msg-v1.1.1', sha: releaseSha, notes: '' }], {
+      ...versions, [first]: '1.1.1',
+    });
+    assert.equal(prs.length, 1);
+    assert.equal(prs[0].version.toString(), '0.1.1');
+    assert(prs[0].updates.every(update => update.path === '.release-please-manifest.json' || update.path.startsWith(`${directory}/`)));
+  });
+}

@@ -16,8 +16,9 @@ make lint tests
 
 `make tests` checks package structure, YAML/JSON and release schemas, exercises
 the actual Release Please package against offline fixtures, and installs each
-imported skill with GitHub CLI and Skills CLI into temporary destinations.
-It does not update installed user skills or publish anything.
+bundled skill with GitHub CLI and Skills CLI into temporary destinations.
+It covers all six skills and does not update installed user skills or publish
+anything. The shared Apache-2.0 license is at the repository root.
 
 Markdown lint checks all new and changed files. The exact original Markdown
 files listed in `scripts/markdown-baseline.json` are exempt only while their
@@ -34,7 +35,9 @@ Use a Conventional Commit squash title: `fix(fun-commit-msg): clarify staging`
 or `feat(review-this): expand boundary review`. Changed package paths select
 releases; a title's scope does not select packages by itself. Keep unrelated
 skill changes in separate PRs. `feat` requests a minor release and `fix` a
-patch; `!` or a `BREAKING CHANGE:` footer requests a major release. Internal
+patch; `!` or a `BREAKING CHANGE:` footer requests a major release for stable
+skills. The two development skills stay within `0.x`, as described in the
+[development version policy](docs/skills.md#independent-releases). Internal
 `chore`, `ci`, and `test` changes normally do not request a release.
 
 Review the latest head and the **Skill validation** check before merging.

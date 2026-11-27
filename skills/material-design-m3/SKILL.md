@@ -1,5 +1,5 @@
 ---
-name: m3
+name: material-design-m3
 description: >-
   Design, implement, migrate, and review web interfaces using Google's Material
   Design 3 (M3), including M3 Expressive. Use for Material 3 websites, M3 themes,

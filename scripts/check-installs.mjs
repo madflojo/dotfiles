@@ -6,7 +6,8 @@ import path from 'node:path';
 import yaml from 'js-yaml';
 
 const root = process.cwd();
-const names = Object.keys(JSON.parse(readFileSync('skills/provenance.json')));
+const names = Object.keys(JSON.parse(readFileSync('release-please-config.json')).packages)
+  .map(directory => path.basename(directory));
 const cli = path.join(root, 'node_modules/skills/bin/cli.mjs');
 // GitHub CLI normalizes blank lines immediately after its tracking frontmatter.
 const body = text => text.replace(/^---\r?\n[\s\S]*?\r?\n---\s*\n/, '');
