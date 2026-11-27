@@ -6,11 +6,24 @@ updates:
       interval: weekly
     groups:
       github-actions:
-        patterns: ['*']
+        patterns:
+          - '*'
   - package-ecosystem: npm
     directory: /
     schedule:
       interval: weekly
     groups:
       validation-tools:
-        patterns: ['*']
+        patterns:
+          - '*'
+  - package-ecosystem: npm
+    directory: /.github/commitlint
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      commitlint:
+        patterns:
+          - '*'
