@@ -1,8 +1,7 @@
 # dotfiles 🧰
 
-My terminal and editor settings, shared agent instructions, and reusable skills.
-The skills work on their own, so you can install one without adopting the rest
-of my setup.
+Terminal and editor settings, shared agent instructions, and reusable skills.
+Install individual skills or use the shared agent guidance below.
 
 [![License](https://img.shields.io/github/license/madflojo/dotfiles)](LICENSE)
 
@@ -18,11 +17,11 @@ of my setup.
 | [diagram-quality](skills/diagram-quality/SKILL.md) | Make diagrams easier to follow while keeping them technically accurate |
 | [material-design-m3](skills/material-design-m3/SKILL.md) | Build and review web interfaces using Material 3 |
 
-Install a skill with Skills CLI. For example, to add `diagram-quality` for your
-user account:
+Install `diagram-quality` for your user account with Skills CLI:
 
 ```sh
-npx skills@1.9.0 add madflojo/dotfiles --skill diagram-quality --global
+npx skills@1.9.0 install https://github.com/madflojo/dotfiles \
+  --skill diagram-quality --global
 ```
 
 Replace `diagram-quality` with any skill in the table, or omit the
@@ -36,32 +35,28 @@ repository.
 
 ## Agent guidance installation
 
-The agent guidance describes how I want agents to work: how they load context,
-plan changes, validate results, and review their work. If you want to use them,
-copy the shared files into your home directory as a complete set.
+The shared guidance covers context loading, planning, validation, and review.
+Install it separately from the skills.
 
-First, inspect and back up any existing destination files. If a destination is
-a symlink, remove only the link before copying; `cp` follows destination
-symlinks and would overwrite the linked file. Do the same for any separate
-agent entrypoint. Keep your existing `AGENTS-local.md`.
+1. Inspect and back up existing destination files. If a destination is a
+   symlink, remove only the link before copying; `cp` follows destination
+   symlinks and would overwrite the linked file. Apply this precaution to any
+   separate agent entrypoint too. Preserve your existing `AGENTS-local.md`.
+2. From this repository, copy the complete shared set into your home directory:
 
-From this repository, after preparing the destinations:
+   ```sh
+   cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md \
+     AGENTS-validation.md AGENTS-review.md AGENTS-architecture.md "$HOME/"
+   ```
 
-```sh
-cp AGENTS.md AGENTS-working-style.md AGENTS-workflow.md AGENTS-validation.md \
-  AGENTS-review.md AGENTS-architecture.md "$HOME/"
-```
-
-This replaces files with matching names. Repeat the copy when updating the
-shared guidance so the entrypoint and companion files stay in sync.
-
-Configure your agent to load `$HOME/AGENTS.md`. If it requires an entrypoint in
-another location, copy `AGENTS.md` there too. Companion files still load from
-`$HOME`, regardless of where the entrypoint lives.
-
-Use `$HOME/AGENTS-local.md` for machine-specific additions. Keep it separate
-from shared updates. If you keep a local copy in this repository, leave it
-untracked and locally ignored.
+   This replaces files with matching names. Repeat the complete copy when
+   updating shared guidance so the entrypoint and companion files stay in sync.
+3. Configure your agent to load `$HOME/AGENTS.md`. If it requires an entrypoint
+   in another location, copy `AGENTS.md` there too. Companion files still load
+   from `$HOME`, regardless of where the entrypoint lives.
+4. Use `$HOME/AGENTS-local.md` for machine-specific additions. Keep it separate
+   from shared updates. If you keep a local copy in this repository, leave it
+   untracked and locally ignored.
 
 ## What's here
 
