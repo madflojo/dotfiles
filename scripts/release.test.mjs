@@ -4,11 +4,20 @@ import { readFileSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import yaml from 'js-yaml';
+import { load } from 'js-yaml';
 import { Manifest } from 'release-please';
 
 const config = JSON.parse(readFileSync('release-please-config.json'));
-const versions = JSON.parse(readFileSync('.release-please-manifest.json'));
+// Keep simulation baselines stable when the live packages are released.
+const fixtureVersions = {
+  'skills/fun-commit-msg': '1.1.0',
+  'skills/fun-pull-requests': '1.1.0',
+  'skills/learn-this-project': '1.0.1',
+  'skills/review-this': '1.0.1',
+  'skills/engineering-tribunal': '0.1.0',
+  'skills/material-design-m3': '0.1.0',
+  'skills/diagram-quality': '0.1.0',
+};
 const boundary = 'a'.repeat(40);
 const names = Object.keys(config.packages);
 const [first, second] = names;
@@ -17,7 +26,7 @@ const importCommit = commit(boundary, 'feat: historic import', names.map(p => `$
 const quiet = Object.fromEntries(['info', 'warn', 'debug', 'error', 'trace'].map(key => [key, () => {}]));
 
 test('release workflow opens PRs on main pushes without publishing releases', () => {
-  const workflow = yaml.load(readFileSync('.github/workflows/release-please.yml', 'utf8'));
+  const workflow = load(readFileSync('.github/workflows/release-please.yml', 'utf8'));
   assert.deepEqual(workflow.on.push?.branches, ['main']);
   assert('workflow_dispatch' in workflow.on);
   assert.equal(workflow.jobs.release.needs, 'boundary');
@@ -28,7 +37,7 @@ test('release workflow opens PRs on main pushes without publishing releases', ()
 });
 
 test('release boundary accepts PR-only mode and rejects invalid ancestry', () => {
-  const workflow = yaml.load(readFileSync('.github/workflows/release-please.yml', 'utf8'));
+  const workflow = load(readFileSync('.github/workflows/release-please.yml', 'utf8'));
   const guard = workflow.jobs.boundary.steps.find(step => step.run).run;
   const directory = mkdtempSync(path.join(tmpdir(), 'release-boundary-'));
   try {
@@ -48,7 +57,7 @@ test('release boundary accepts PR-only mode and rejects invalid ancestry', () =>
   }
 });
 
-async function candidates(commits, releases = [], manifestVersions = versions) {
+async function candidates(commits, releases = [], manifestVersions = fixtureVersions) {
   const fixtureConfig = { ...config, 'bootstrap-sha': boundary };
   const client = new Proxy({
     repository: { owner: 'madflojo', repo: 'dotfiles', defaultBranch: 'main' },
@@ -83,10 +92,12 @@ test('one package fix selects one independent patch and only its release files',
     '.release-please-manifest.json', `${first}/CHANGELOG.md`, `${first}/version.txt`,
   ].sort());
   for (const update of prs[0].updates) {
-    const before = readFileSync(update.path, 'utf8');
+    const before = update.path === '.release-please-manifest.json'
+      ? JSON.stringify(fixtureVersions)
+      : readFileSync(update.path, 'utf8');
     const after = update.updater.updateContent(before);
     if (update.path === '.release-please-manifest.json') {
-      assert.deepEqual(JSON.parse(after), { ...versions, [first]: '1.1.1' });
+      assert.deepEqual(JSON.parse(after), { ...fixtureVersions, [first]: '1.1.1' });
     } else if (update.path.endsWith('version.txt')) {
       assert.equal(update.createIfMissing, false);
       assert.equal(after.trim(), '1.1.1');
@@ -115,7 +126,7 @@ test('a released package does not erase pending changes in unreleased packages',
     commit('2'.repeat(40), 'fix: pending PR guidance', [`${second}/SKILL.md`]),
     commit('1'.repeat(40), 'fix: already released', [`${first}/SKILL.md`]),
   ], [{ tagName: 'fun-commit-msg-v1.1.1', name: 'fun-commit-msg-v1.1.1', sha: releaseSha, notes: '' }], {
-    ...versions, [first]: '1.1.1',
+    ...fixtureVersions, [first]: '1.1.1',
   });
   assert.equal(prs.length, 1);
   assert.equal(prs[0].version.toString(), '1.1.1');
@@ -152,7 +163,7 @@ for (const name of ['engineering-tribunal', 'material-design-m3', 'diagram-quali
       commit('2'.repeat(40), 'fix: pending development guidance', [`${directory}/SKILL.md`]),
       commit('1'.repeat(40), 'fix: already released', [`${first}/SKILL.md`]),
     ], [{ tagName: 'fun-commit-msg-v1.1.1', name: 'fun-commit-msg-v1.1.1', sha: releaseSha, notes: '' }], {
-      ...versions, [first]: '1.1.1',
+      ...fixtureVersions, [first]: '1.1.1',
     });
     assert.equal(prs.length, 1);
     assert.equal(prs[0].version.toString(), '0.1.1');

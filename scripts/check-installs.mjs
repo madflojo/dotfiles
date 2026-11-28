@@ -3,7 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import yaml from 'js-yaml';
+import { load } from 'js-yaml';
 
 const root = process.cwd();
 const names = Object.keys(JSON.parse(readFileSync('release-please-config.json')).packages)
@@ -11,7 +11,7 @@ const names = Object.keys(JSON.parse(readFileSync('release-please-config.json'))
 const cli = path.join(root, 'node_modules/skills/bin/cli.mjs');
 // GitHub CLI normalizes blank lines immediately after its tracking frontmatter.
 const body = text => text.replace(/^---\r?\n[\s\S]*?\r?\n---\s*\n/, '');
-const frontmatter = text => yaml.load(text.match(/^---\r?\n([\s\S]*?)\r?\n---/)[1]);
+const frontmatter = text => load(text.match(/^---\r?\n([\s\S]*?)\r?\n---/)[1]);
 
 function verify(source, destination) {
   assert.deepEqual(readdirSync(destination).sort(), readdirSync(source).sort());

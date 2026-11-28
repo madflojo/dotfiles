@@ -4,7 +4,7 @@ import path from 'node:path';
 import { createRequire } from 'node:module';
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import yaml from 'js-yaml';
+import { load } from 'js-yaml';
 import { repositoryFiles } from './files.mjs';
 
 const require = createRequire(import.meta.url);
@@ -46,16 +46,16 @@ for (const name of skills) {
   const source = readFileSync(`skills/${name}/SKILL.md`, 'utf8');
   const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   assert(match, `${name}: missing frontmatter`);
-  const metadata = yaml.load(match[1]);
+  const metadata = load(match[1]);
   assert.equal(metadata.name, name);
   assert.equal(typeof metadata.description, 'string');
   assert(metadata.description.trim());
 }
 for (const file of repositoryFiles().filter(f => /\.(json|ya?ml)$/.test(f))) {
   if (file.endsWith('.json')) json(file);
-  else yaml.load(readFileSync(file, 'utf8'));
+  else load(readFileSync(file, 'utf8'));
 }
-const dependabot = yaml.load(readFileSync('.github/dependabot.yml', 'utf8'));
+const dependabot = load(readFileSync('.github/dependabot.yml', 'utf8'));
 assert.equal(dependabot.version, 2);
 assert.deepEqual(dependabot.updates.map(update => `${update['package-ecosystem']}:${update.directory}`).sort(),
   ['github-actions:/', 'npm:/', 'npm:/.github/commitlint']);
