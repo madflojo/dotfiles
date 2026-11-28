@@ -57,6 +57,7 @@ for (const file of repositoryFiles().filter(f => /\.(json|ya?ml)$/.test(f))) {
 }
 const dependabot = load(readFileSync('.github/dependabot.yml', 'utf8'));
 assert.equal(dependabot.version, 2);
-assert.deepEqual(dependabot.updates.map(update => update['package-ecosystem']).sort(), ['github-actions', 'npm']);
+assert.deepEqual(dependabot.updates.map(update => `${update['package-ecosystem']}:${update.directory}`).sort(),
+  ['github-actions:/', 'npm:/', 'npm:/.github/commitlint']);
 assert.equal(new Set(dependabot.updates.map(update => `${update['package-ecosystem']}:${update.directory}`)).size, dependabot.updates.length);
 console.log('Skill packaging, frontmatter, release schemas, JSON/YAML and dependency ecosystems passed.');
